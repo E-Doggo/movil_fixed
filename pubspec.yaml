@@ -80,6 +80,7 @@ flutter:
     - assets/images/opcion-vegetariana.jpg
     - assets/images/person-marker.png
     - assets/images/person-marker.svg
+    - assets/env
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proyecto_progra_movil/home_page.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:proyecto_progra_movil/login/ui/login_provider.dart';
-// import 'package:proyecto_progra_movil/maps_screen/ui/maps_provider.dart';
+import 'package:proyecto_progra_movil/maps_screen/ui/maps_provider.dart';
 import 'package:proyecto_progra_movil/preferences/preferences_screen.dart';
 import 'package:proyecto_progra_movil/register/ui/bloc_provider.dart';
 import 'firebase_options.dart';
@@ -13,6 +13,8 @@ import 'firebase_options.dart';
 const IconData menu = IconData(0xe3dc, fontFamily: 'MaterialIcons');
 
 Future main() async {
+  await dotenv.load(fileName: "assets/env");
+
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
@@ -48,12 +50,12 @@ final GoRouter _router = GoRouter(
             return const PreferencesPage();
           },
         ),
-        // GoRoute(
-        //   path: 'mainPage',
-        //   builder: (BuildContext context, GoRouterState state) {
-        //     return const MapProvider();
-        //   },
-        // ),
+        GoRoute(
+          path: 'mainPage',
+          builder: (BuildContext context, GoRouterState state) {
+            return const MapProvider();
+          },
+        ),
       ],
     ),
   ],

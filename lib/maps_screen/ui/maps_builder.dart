@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:location/location.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:proyecto_progra_movil/maps_screen/bloc/maps_bloc.dart';
-import 'package:proyecto_progra_movil/maps_screen/bloc/maps_event.dart';
 import 'package:proyecto_progra_movil/maps_screen/bloc/maps_state.dart';
-import 'package:proyecto_progra_movil/shared_preferences/shared_preferences.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -41,14 +35,15 @@ class _MapScreenState extends State<MapScreen> {
             return SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child: MapboxMap(
-                  accessToken: dotenv.env['MAPBOX_ACCESS_TOKEN'],
+                  accessToken:
+                      "pk.eyJ1IjoiZG9nZ2VyLWUiLCJhIjoiY2x2ZDljMG9uMG42aDJrbGg4aG91M3l4OSJ9.-jl41NBFO9bMJa7H4lisnA",
                   initialCameraPosition: _initialCameraPosition,
                   onMapCreated: _onMapCreated,
                   onStyleLoadedCallback: () =>
                       _onStyleLoadedCallback(state.latLng),
-                  myLocationEnabled: true,
-                  myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
-                  minMaxZoomPreference: const MinMaxZoomPreference(14, 17),
+                  // myLocationEnabled: true,
+                  // myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
+                  minMaxZoomPreference: const MinMaxZoomPreference(14, 30),
                 ));
           } else if (state is MapFailedToLoad) {
             return Container(
@@ -63,7 +58,9 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   _onMapCreated(MapboxMapController controller) async {
-    this.controller = controller;
+    setState(() {
+      this.controller = controller;
+    });
   }
 
   _onStyleLoadedCallback(latLng) async {
