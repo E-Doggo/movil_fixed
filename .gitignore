@@ -41,3 +41,20 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Ignoring Linux generated plugin registrants
+linux/flutter/generated_plugin_registrant.cc
+linux/flutter/generated_plugin_registrant.h
+linux/flutter/generated_plugins.cmake
+
+# Ignoring MacOS generated plugin registrant
+macos/Flutter/GeneratedPluginRegistrant.swift
+
+# Ignoring Windows generated plugin registrants
+windows/flutter/generated_plugin_registrant.cc
+windows/flutter/generated_plugin_registrant.h
+windows/flutter/generated_plugins.cmake
+
+# If you want to ignore all changes in generated_plugin_registrant files regardless of their location, you can use:
+**/generated_plugin_registrant.*
+
