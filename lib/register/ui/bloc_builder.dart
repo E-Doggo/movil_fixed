@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/register/bloc/register_bloc.dart';
 import 'package:proyecto_progra_movil/register/bloc/register_event.dart';
@@ -21,6 +24,8 @@ class _RegisterState extends State<RegisterScreen> {
   final TextEditingController _password2Controller = TextEditingController();
   final TextEditingController _streetController = TextEditingController();
   final TextEditingController _descripcionController = TextEditingController();
+  late MapboxMapController mapController;
+
   BoxDecoration _buildBackgroundDecoration() {
     return const BoxDecoration(
       image: DecorationImage(
@@ -212,6 +217,8 @@ class _RegisterState extends State<RegisterScreen> {
                 ),
               );
             } else if (state is RegisterWaitingRestaurant) {
+              dynamic _initialCameraPosition =
+                  CameraPosition(target: state.latLng, zoom: 15);
               return Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Card(
@@ -244,7 +251,29 @@ class _RegisterState extends State<RegisterScreen> {
                           ),
                         ),
                       ),
-                      _buildRestaurantCard(_formKey),
+                      Column(
+                        children: [
+                          _buildRestaurantCard(_formKey),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.25,
+                            child: MapboxMap(
+                              accessToken:
+                                  "pk.eyJ1IjoiZG9nZ2VyLWUiLCJhIjoiY2x2ZDljMG9uMG42aDJrbGg4aG91M3l4OSJ9.-jl41NBFO9bMJa7H4lisnA",
+                              initialCameraPosition: _initialCameraPosition,
+                              onMapCreated: _onMapCreated,
+                              // onMapClick:
+                              //     (Point<double> point, LatLng coordinates) {
+                              //   _addMarkerToSelectedPoint(coordinates);
+                              // },
+                              // myLocationEnabled: true,
+                              // myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
+                              styleString: "mapbox://styles/mapbox/light-v11",
+                              minMaxZoomPreference:
+                                  const MinMaxZoomPreference(14, 30),
+                            ),
+                          )
+                        ],
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: ElevatedButton(
@@ -310,6 +339,22 @@ class _RegisterState extends State<RegisterScreen> {
             }
           }),
         ],
+      ),
+    );
+  }
+
+  _onMapCreated(MapboxMapController controller) async {
+    setState(() {
+      mapController = controller;
+    });
+  }
+
+  _addMarkerToSelectedPoint(LatLng coordinates) {
+    mapController.addSymbol(
+      SymbolOptions(
+        geometry: coordinates,
+        iconSize: 0.5,
+        iconImage: "assets/images/restaurant.png",
       ),
     );
   }
