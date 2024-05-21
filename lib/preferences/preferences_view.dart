@@ -107,7 +107,7 @@ class PreferencesView extends StatelessWidget {
                 print(email);
                 print(selectedPreferences);
                 await DB.uploadPreferences(email, selectedPreferences);
-                context.go("/");
+                context.go("/mainPage");
               },
               child: Icon(Icons.check),
             ),

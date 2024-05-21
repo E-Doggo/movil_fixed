@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:proyecto_progra_movil/preferences/comida.dart';
 
 class FireStore {
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> uploadUser(String username, String email) async {
     CollectionReference collRef = _firestore.collection("users");
@@ -81,5 +81,29 @@ class FireStore {
     } catch (e) {
       throw Exception("Couldn't find user in DB");
     }
+  }
+
+  Future<List<Map<String, dynamic>>> getRestaurants() async {
+    try {
+      CollectionReference collRef = _firestore.collection("restaurants");
+      QuerySnapshot querySnapshot = await collRef.get();
+      print(querySnapshot.docs);
+      List<Map<String, dynamic>> restaurants = querySnapshot.docs.map((doc) {
+        return doc.data() as Map<String, dynamic>;
+      }).toList();
+
+      return restaurants;
+    } catch (e) {
+      throw Error();
+    }
+  }
+
+  Future<List> getLocationRestaurants() async {
+    final List restaurants = await getRestaurants();
+    List latLst = [];
+    restaurants.forEach((restaurant) {
+      latLst.add(restaurant["coordinates"]);
+    });
+    return latLst;
   }
 }
