@@ -43,7 +43,7 @@ class MapRepo {
     List<dynamic> listLocations = await mapDataSource.getLocationRestaurants();
     listLocations.forEach((location) {
       listLngLat.add(
-        LatLng(location["xcoords"], location["ycoords"]),
+        LatLng(location["ycoords"], location["xcoords"]),
       );
     });
     return listLngLat;

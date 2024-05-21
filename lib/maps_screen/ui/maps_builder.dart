@@ -60,7 +60,7 @@ class _MapScreenState extends State<MapScreen> {
 
   _onMapCreated(MapboxMapController controller) async {
     setState(() {
-      this.mapController = controller;
+      mapController = controller;
     });
   }
 
@@ -68,8 +68,8 @@ class _MapScreenState extends State<MapScreen> {
     mapController.addSymbol(
       SymbolOptions(
         geometry: latLng,
-        iconSize: 5,
-        iconImage: "assets/images/person-marker.png",
+        iconSize: 0.5,
+        iconImage: "assets/images/location.png",
       ),
     );
     _addRestaurantsMarkers(listLocations);
@@ -80,8 +80,8 @@ class _MapScreenState extends State<MapScreen> {
       (location) => mapController.addSymbol(
         SymbolOptions(
           geometry: location,
-          iconSize: 5,
-          iconImage: "assets/images/person-marker.png",
+          iconSize: 1.25,
+          iconImage: "assets/images/restaurant.png",
         ),
       ),
     );

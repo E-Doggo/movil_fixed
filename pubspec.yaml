@@ -72,14 +72,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/silpancho-background-homepage.jpg
-    - assets/images/opcion-china.jpg
-    - assets/images/opcion-italiana.jpg
-    - assets/images/opcion-japonesa.jpg
-    - assets/images/opcion-mexicana.jpg
-    - assets/images/opcion-vegetariana.jpg
-    - assets/images/person-marker.png
-    - assets/images/person-marker.svg
+    - assets/images/
     - assets/env
   #   - images/a_dot_ham.jpeg
 
