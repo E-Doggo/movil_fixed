@@ -58,7 +58,7 @@ Widget LoginOnWait(emailController, passwordController) {
               ),
               const SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -79,22 +79,25 @@ Widget LoginOnWait(emailController, passwordController) {
                   ],
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  String username = emailController.text.toString();
-                  String password = passwordController.text.toString();
-                  if (username.isNotEmpty && password.isNotEmpty) {
-                    context
-                        .read<LoginBloc>()
-                        .add(LoginInput(email: username, password: password));
-                  }
-                },
-                style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll<Color>(
-                      Color.fromARGB(255, 89, 206, 144)),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    String username = emailController.text.toString();
+                    String password = passwordController.text.toString();
+                    if (username.isNotEmpty && password.isNotEmpty) {
+                      context
+                          .read<LoginBloc>()
+                          .add(LoginInput(email: username, password: password));
+                    }
+                  },
+                  style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll<Color>(
+                        Color.fromARGB(255, 89, 206, 144)),
+                  ),
+                  child:
+                      const Text('Iniciar Sesion', style: TextStyle(color: Colors.white)),
                 ),
-                child:
-                    const Text('Iniciar Sesion', style: TextStyle(color: Colors.white)),
               ),
               TextButton(
                 onPressed: () {},
@@ -106,15 +109,18 @@ Widget LoginOnWait(emailController, passwordController) {
                   ),
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  context.go("/register");
-                },
-                child: const Text(
-                  'Eres nuevo registrate',
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    decorationColor: Color.fromRGBO(89, 206, 143, 1),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextButton(
+                  onPressed: () {
+                    context.go("/register");
+                  },
+                  child: const Text(
+                    'Eres nuevo, registrate',
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      decorationColor: Color.fromRGBO(89, 206, 143, 1),
+                    ),
                   ),
                 ),
               ),
