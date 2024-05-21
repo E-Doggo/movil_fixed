@@ -13,7 +13,7 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  late MapboxMapController controller;
+  late MapboxMapController mapController;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class _MapScreenState extends State<MapScreen> {
                   initialCameraPosition: _initialCameraPosition,
                   onMapCreated: _onMapCreated,
                   onStyleLoadedCallback: () =>
-                      _onStyleLoadedCallback(state.latLng),
+                      _onStyleLoadedCallback(state.latLng, state.listLocations),
                   // myLocationEnabled: true,
                   // myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
                   minMaxZoomPreference: const MinMaxZoomPreference(14, 30),
@@ -59,19 +59,30 @@ class _MapScreenState extends State<MapScreen> {
 
   _onMapCreated(MapboxMapController controller) async {
     setState(() {
-      this.controller = controller;
+      this.mapController = controller;
     });
   }
 
-  _onStyleLoadedCallback(latLng) async {
-    {
-      await controller.addSymbol(
+  _onStyleLoadedCallback(LatLng latLng, List listLocations) {
+    mapController.addSymbol(
+      SymbolOptions(
+        geometry: latLng,
+        iconSize: 1,
+        iconImage: "assets/images/person-marker.png",
+      ),
+    );
+    _addRestaurantsMarkers(listLocations);
+  }
+
+  _addRestaurantsMarkers(List listLocations) {
+    listLocations.forEach(
+      (location) => mapController.addSymbol(
         SymbolOptions(
-          geometry: latLng,
-          iconSize: 1.25,
+          geometry: location,
+          iconSize: 1,
           iconImage: "assets/images/person-marker.png",
         ),
-      );
-    }
+      ),
+    );
   }
 }

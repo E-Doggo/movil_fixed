@@ -9,9 +9,11 @@ class MapLoading extends MapState {}
 class MapLoadedUser extends MapState {
   LatLng latLng;
 
-  MapLoadedUser({required this.latLng});
+  List<dynamic> listLocations;
 
-  List<Object> get props => [latLng];
+  MapLoadedUser({required this.latLng, required this.listLocations});
+
+  List<Object> get props => [latLng, listLocations];
 }
 
 class MapSelectedRestaurant extends MapState {}

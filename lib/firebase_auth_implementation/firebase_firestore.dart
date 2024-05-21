@@ -83,20 +83,27 @@ class FireStore {
     }
   }
 
-  Future<List> getRestaurants() async {
-    final CollectionReference collRef = _firestore.collection("restaurants");
-    QuerySnapshot querySnapshot = await collRef.get();
-    List<Map<String, dynamic>> restaurants = querySnapshot.docs.map((doc) {
-      return doc.data() as Map<String, dynamic>;
-    }).toList();
+  Future<List<Map<String, dynamic>>> getRestaurants() async {
+    try {
+      CollectionReference collRef = _firestore.collection("restaurants");
+      QuerySnapshot querySnapshot = await collRef.get();
+      print(querySnapshot.docs);
+      List<Map<String, dynamic>> restaurants = querySnapshot.docs.map((doc) {
+        return doc.data() as Map<String, dynamic>;
+      }).toList();
 
-    return restaurants;
+      return restaurants;
+    } catch (e) {
+      throw Error();
+    }
   }
 
-  Future getLocationRestaurants() async {
+  Future<List> getLocationRestaurants() async {
     final List restaurants = await getRestaurants();
-    late List latLst = [];
-    restaurants.map((restaurant) => latLst.add(restaurant["coordinates"]));
+    List latLst = [];
+    restaurants.forEach((restaurant) {
+      latLst.add(restaurant["coordinates"]);
+    });
     return latLst;
   }
 }

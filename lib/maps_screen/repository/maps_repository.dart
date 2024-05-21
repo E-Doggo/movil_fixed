@@ -37,4 +37,15 @@ class MapRepo {
     sharedPrefs.setDouble('latitude', locationData.latitude!);
     sharedPrefs.setDouble('longitude', locationData.longitude!);
   }
+
+  Future<List> getLocationRestaurants() async {
+    List listLngLat = [];
+    List<dynamic> listLocations = await mapDataSource.getLocationRestaurants();
+    listLocations.forEach((location) {
+      listLngLat.add(
+        LatLng(location["xcoords"], location["ycoords"]),
+      );
+    });
+    return listLngLat;
+  }
 }
