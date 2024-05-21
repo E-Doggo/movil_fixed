@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:proyecto_progra_movil/register/data_source/register_data_source.dart';
 
 class RegisterRepo {
@@ -19,4 +20,6 @@ class RegisterRepo {
       await dataSource.saveUserDB(username, email, street, description);
     }
   }
+
+  void saveLatLng(LatLng latLng) {}
 }

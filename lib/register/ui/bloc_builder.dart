@@ -268,6 +268,7 @@ class _RegisterState extends State<RegisterScreen> {
                                 onMapClick:
                                     (Point<double> point, LatLng coordinates) {
                                   _addMarkerToSelectedPoint(coordinates);
+                                  state.latLng = coordinates;
                                 },
                                 // myLocationEnabled: true,
                                 // myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
@@ -357,6 +358,7 @@ class _RegisterState extends State<RegisterScreen> {
   }
 
   _addMarkerToSelectedPoint(LatLng coordinates) {
+    mapController.clearSymbols();
     mapController.addSymbol(
       SymbolOptions(
         geometry: coordinates,
