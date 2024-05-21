@@ -43,6 +43,7 @@ class _MapScreenState extends State<MapScreen> {
                       _onStyleLoadedCallback(state.latLng, state.listLocations),
                   // myLocationEnabled: true,
                   // myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
+                  styleString: "mapbox://styles/mapbox/light-v11",
                   minMaxZoomPreference: const MinMaxZoomPreference(14, 30),
                 ));
           } else if (state is MapFailedToLoad) {
@@ -67,7 +68,7 @@ class _MapScreenState extends State<MapScreen> {
     mapController.addSymbol(
       SymbolOptions(
         geometry: latLng,
-        iconSize: 1,
+        iconSize: 5,
         iconImage: "assets/images/person-marker.png",
       ),
     );
@@ -79,7 +80,7 @@ class _MapScreenState extends State<MapScreen> {
       (location) => mapController.addSymbol(
         SymbolOptions(
           geometry: location,
-          iconSize: 1,
+          iconSize: 5,
           iconImage: "assets/images/person-marker.png",
         ),
       ),
