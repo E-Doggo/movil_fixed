@@ -40,7 +40,7 @@ Widget LoginOnWait(emailController, passwordController) {
                 child: const Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text(
-                    'Login',
+                    'Inicio de Sesion',
                     style: TextStyle(
                       fontSize: 18.0,
                       color: Colors.white,
@@ -65,7 +65,7 @@ Widget LoginOnWait(emailController, passwordController) {
                     TextFormField(
                       controller: emailController,
                       decoration: const InputDecoration(
-                        labelText: 'Usuario',
+                        labelText: 'Correo',
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -94,7 +94,7 @@ Widget LoginOnWait(emailController, passwordController) {
                       Color.fromARGB(255, 89, 206, 144)),
                 ),
                 child:
-                    const Text('Log in', style: TextStyle(color: Colors.white)),
+                    const Text('Iniciar Sesion', style: TextStyle(color: Colors.white)),
               ),
               TextButton(
                 onPressed: () {},
@@ -188,7 +188,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                 );
               } else if (state is LoginSuccesfulPrefs) {
                 return AlertDialog(
-                  title: const Text("Login Exitoso"),
+                  title: const Text("Inicio de Sesion Exitoso"),
                   content: Text("Bienvenido a Ruta Gourmet ${state.email}"),
                   actions: [
                     okButtonPrefs,
@@ -196,7 +196,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                 );
               } else if (state is LoginSuccesfulNoPrefs) {
                 return AlertDialog(
-                  title: const Text("Login Exitoso"),
+                  title: const Text("Inicio de Sesion Exitoso"),
                   content: Text("Bienvenido a Ruta Gourmet ${state.email}"),
                   actions: [
                     // okButtonMain,
@@ -206,8 +206,8 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
               } else if (state is LoginFailed) {
                 _passwordController.clear();
                 return AlertDialog(
-                  title: const Text("Login Fallido"),
-                  content: const Text("reintente ingresar sus datos"),
+                  title: const Text("Inicio de Sesion Fallido"),
+                  content: const Text("Correo o contrasena incorrecta"),
                   actions: [
                     okButtonFailed,
                   ],

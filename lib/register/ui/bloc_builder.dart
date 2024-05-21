@@ -157,7 +157,7 @@ class _RegisterState extends State<RegisterScreen> {
                         child: const Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Text(
-                            'Register',
+                            'Registro',
                             style: TextStyle(
                               fontSize: 18.0,
                               color: Colors.white,
