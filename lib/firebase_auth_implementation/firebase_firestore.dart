@@ -36,12 +36,7 @@ class FireStore {
   }
 
   Future<void> uploadRestaurant(String resName, String email, String street,
-      String description, LatLng latlng) async {
-    final String resID = resName.replaceAll(" ", "_");
-    Map<String, double> coordinates = {
-      "xcoords": latlng.longitude,
-      "ycoords": latlng.latitude,
-    };
+      String description, Map latlng, String resID) async {
     List<Map<String, String>> menu = [
       {"dish": "Nombre dish", "photo": "ulr"},
       {"dish": "Nombre dish", "photo": "ulr"},
@@ -51,7 +46,7 @@ class FireStore {
     //probably will have to change to float at some point
     CollectionReference collRef = _firestore.collection("restaurants");
     await collRef.add({
-      "coordinates": coordinates,
+      "coordinates": latlng,
       "description": description,
       "email": email,
       "logo": "",
