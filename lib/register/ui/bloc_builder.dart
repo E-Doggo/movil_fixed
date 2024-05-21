@@ -168,29 +168,51 @@ class _RegisterState extends State<RegisterScreen> {
                       _buildCardForms(_formKey),
                       Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            final FormState form = _formKey.currentState!;
-                            if (form.validate()) {
-                              String password =
-                                  _passwordController.text.toString();
-                              String email = _emailController.text.toString();
-                              String passwordValidation =
-                                  _password2Controller.text.toString();
-                              String username = _userController.text.toString();
-                              context.read<RegisterBloc>().add(RegisterSave(
-                                  email: email,
-                                  password: password,
-                                  passwordValidation: passwordValidation,
-                                  username: username));
-                            }
-                          },
-                          style: const ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll<Color>(
-                                Color.fromARGB(255, 89, 206, 144)),
-                          ),
-                          child: const Text("Registrarse",
-                              style: TextStyle(color: Colors.white)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment
+                              .center, // Centra los elementos horizontalmente
+                          children: [
+                            const CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Color.fromARGB(255, 89, 206, 144),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            ElevatedButton(
+                              onPressed: () {
+                                final FormState form = _formKey.currentState!;
+                                if (form.validate()) {
+                                  String password =
+                                      _passwordController.text.toString();
+                                  String email =
+                                      _emailController.text.toString();
+                                  String passwordValidation =
+                                      _password2Controller.text.toString();
+                                  String username =
+                                      _userController.text.toString();
+                                  context.read<RegisterBloc>().add(
+                                        RegisterSave(
+                                          email: email,
+                                          password: password,
+                                          passwordValidation:
+                                              passwordValidation,
+                                          username: username,
+                                        ),
+                                      );
+                                }
+                              },
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                  Color.fromARGB(255, 89, 206, 144),
+                                ),
+                              ),
+                              child: Text(
+                                "Registrarse",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       TextButton(
@@ -298,7 +320,7 @@ class _RegisterState extends State<RegisterScreen> {
               );
             } else if (state is RegisterSuccesful) {
               context.go("/preferences");
-              return const Text("REGISTRO EXITOSO");
+              return const Text("");
             } else {
               _userController.clear();
               _emailController.clear();
