@@ -42,6 +42,12 @@ class FireStore {
       "xcoords": latlng.longitude,
       "ycoords": latlng.latitude,
     };
+    List<Map<String, String>> menu = [
+      {"dish": "Nombre dish", "photo": "ulr"},
+      {"dish": "Nombre dish", "photo": "ulr"},
+      {"dish": "Nombre dish", "photo": "ulr"},
+      {"dish": "Nombre dish", "photo": "ulr"}
+    ];
     //probably will have to change to float at some point
     CollectionReference collRef = _firestore.collection("restaurants");
     await collRef.add({
@@ -52,6 +58,7 @@ class FireStore {
       "name": resName,
       "restaurant_id": resID,
       "street": street,
+      "menu": menu,
     });
   }
 
