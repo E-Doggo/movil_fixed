@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:proyecto_progra_movil/preferences/comida.dart';
 
 class FireStore {
@@ -34,12 +35,12 @@ class FireStore {
     }
   }
 
-  Future<void> uploadRestaurant(
-      String resName, String email, String street, String description) async {
+  Future<void> uploadRestaurant(String resName, String email, String street,
+      String description, LatLng latlng) async {
     final String resID = resName.replaceAll(" ", "_");
-    Map<String, int> coordinates = {
-      "xcoords": 0,
-      "ycoords": 0,
+    Map<String, double> coordinates = {
+      "xcoords": latlng.longitude,
+      "ycoords": latlng.latitude,
     };
     //probably will have to change to float at some point
     CollectionReference collRef = _firestore.collection("restaurants");
@@ -94,7 +95,7 @@ class FireStore {
 
       return restaurants;
     } catch (e) {
-      throw Error();
+      throw Exception("Unknown error couldnt fetch restaurants");
     }
   }
 

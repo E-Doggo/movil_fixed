@@ -270,8 +270,6 @@ class _RegisterState extends State<RegisterScreen> {
                                   _addMarkerToSelectedPoint(coordinates);
                                   state.latLng = coordinates;
                                 },
-                                // myLocationEnabled: true,
-                                // myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
                                 styleString: "mapbox://styles/mapbox/light-v11",
                                 minMaxZoomPreference:
                                     const MinMaxZoomPreference(14, 30),
@@ -297,13 +295,16 @@ class _RegisterState extends State<RegisterScreen> {
                                 String street =
                                     _streetController.text.toString();
                                 context.read<RegisterBloc>().add(
-                                    RegisterRestaurant(
-                                        email: email,
-                                        password: password,
-                                        passwordValidation: passwordValidation,
-                                        restaurantName: username,
-                                        description: description,
-                                        streetName: street));
+                                      RegisterRestaurant(
+                                          email: email,
+                                          password: password,
+                                          passwordValidation:
+                                              passwordValidation,
+                                          restaurantName: username,
+                                          description: description,
+                                          streetName: street,
+                                          coords: state.latLng),
+                                    );
                               }
                             },
                             style: const ButtonStyle(

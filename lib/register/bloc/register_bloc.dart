@@ -34,7 +34,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       try {
         await registerRepo.passwordValidation(event.password,
             event.passwordValidation, event.email, event.restaurantName,
-            street: event.streetName, description: event.description);
+            street: event.streetName,
+            description: event.description,
+            coords: event.coords);
         emit(RegisterSuccesful());
       } catch (e) {
         emit(RegisterFailure());
