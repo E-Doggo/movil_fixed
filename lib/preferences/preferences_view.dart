@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:proyecto_progra_movil/app_bar.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_firestore.dart';
 import 'preferences_cubit.dart';
@@ -44,16 +45,7 @@ class PreferencesView extends StatelessWidget {
     return BlocBuilder<PreferencesCubit, List<String>>(
       builder: (context, selectedPreferences) {
         return Scaffold(
-          appBar: AppBar(
-            title: Text(
-              'ESCOGE TUS PREFERENCIAS',
-              style: TextStyle(
-                color: const Color.fromRGBO(89, 206, 143, 1),
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+          appBar: const CustomAppBar(title: 'ESCOGE TUS PREFERENCIAS'),
           body: Container(
             padding: EdgeInsets.all(10.0),
             child: GridView.builder(

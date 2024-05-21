@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:proyecto_progra_movil/app_bar.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_bloc.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_event.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_state.dart';
@@ -154,71 +155,59 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
     );
 
     return Scaffold(
+        appBar: const CustomAppBar(title: 'RUTA GOURMET'),
         body: Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/silpancho-background-homepage.jpg'),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            color: const Color.fromARGB(255, 89, 206, 144), // Fondo verde
-            padding:
-                const EdgeInsets.symmetric(vertical: 1.0), // Ajustar espaciado
-            alignment: Alignment.center,
-            child: const Text(
-              'RUTA GOURMET',
-              style: TextStyle(
-                fontSize: 36.0,
-                fontStyle: FontStyle.italic,
-                color: Colors.white,
-              ),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image:
+                  AssetImage('assets/images/silpancho-background-homepage.jpg'),
+              fit: BoxFit.cover,
             ),
           ),
-          BlocBuilder<LoginBloc, LoginState>(
-            builder: (context, state) {
-              if (state is LoginWaiting) {
-                return Column(
-                  children: [
-                    LoginOnWait(_emailController, _passwordController),
-                  ],
-                );
-              } else if (state is LoginSuccesfulPrefs) {
-                return AlertDialog(
-                  title: const Text("Login Exitoso"),
-                  content: Text("Bienvenido a Ruta Gourmet ${state.email}"),
-                  actions: [
-                    okButtonPrefs,
-                  ],
-                );
-              } else if (state is LoginSuccesfulNoPrefs) {
-                return AlertDialog(
-                  title: const Text("Login Exitoso"),
-                  content: Text("Bienvenido a Ruta Gourmet ${state.email}"),
-                  actions: [
-                    // okButtonMain,
-                    okButtonPrefs
-                  ],
-                );
-              } else if (state is LoginFailed) {
-                _passwordController.clear();
-                return AlertDialog(
-                  title: const Text("Login Fallido"),
-                  content: const Text("reintente ingresar sus datos"),
-                  actions: [
-                    okButtonFailed,
-                  ],
-                );
-              } else {
-                return Container();
-              }
-            },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              BlocBuilder<LoginBloc, LoginState>(
+                builder: (context, state) {
+                  if (state is LoginWaiting) {
+                    return Column(
+                      children: [
+                        LoginOnWait(_emailController, _passwordController),
+                      ],
+                    );
+                  } else if (state is LoginSuccesfulPrefs) {
+                    return AlertDialog(
+                      title: const Text("Login Exitoso"),
+                      content: Text("Bienvenido a Ruta Gourmet ${state.email}"),
+                      actions: [
+                        okButtonPrefs,
+                      ],
+                    );
+                  } else if (state is LoginSuccesfulNoPrefs) {
+                    return AlertDialog(
+                      title: const Text("Login Exitoso"),
+                      content: Text("Bienvenido a Ruta Gourmet ${state.email}"),
+                      actions: [
+                        // okButtonMain,
+                        okButtonPrefs
+                      ],
+                    );
+                  } else if (state is LoginFailed) {
+                    _passwordController.clear();
+                    return AlertDialog(
+                      title: const Text("Login Fallido"),
+                      content: const Text("reintente ingresar sus datos"),
+                      actions: [
+                        okButtonFailed,
+                      ],
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
+            ],
           ),
-        ],
-      ),
-    ));
+        ));
   }
 }
