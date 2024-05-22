@@ -164,7 +164,7 @@ class _RegisterState extends State<RegisterScreen> {
                           child: const Padding(
                             padding: EdgeInsets.all(16.0),
                             child: Text(
-                              'Register',
+                              'Registro',
                               style: TextStyle(
                                 fontSize: 18.0,
                                 color: Colors.white,
@@ -174,7 +174,7 @@ class _RegisterState extends State<RegisterScreen> {
                         ),
                         _buildCardForms(_formKey),
                         Padding(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(15.0),
                           child: ElevatedButton(
                             onPressed: () {
                               final FormState form = _formKey.currentState!;
@@ -201,17 +201,21 @@ class _RegisterState extends State<RegisterScreen> {
                                 style: TextStyle(color: Colors.white)),
                           ),
                         ),
-                        TextButton(
-                          onPressed: () {
-                            context
-                                .read<RegisterBloc>()
-                                .add(RegisterChange(type: 1));
-                          },
-                          child: const Text(
-                            'Registrate como restaurante',
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              decorationColor: Color.fromRGBO(89, 206, 143, 1),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 15.0),
+                          child: TextButton(
+                            onPressed: () {
+                              context
+                                  .read<RegisterBloc>()
+                                  .add(RegisterChange(type: 1));
+                            },
+                            child: const Text(
+                              'Registrate como restaurante',
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                decorationColor:
+                                    Color.fromRGBO(89, 206, 143, 1),
+                              ),
                             ),
                           ),
                         ),
