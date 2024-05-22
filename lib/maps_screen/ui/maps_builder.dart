@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:proyecto_progra_movil/app_bar.dart';
 import 'package:proyecto_progra_movil/maps_screen/bloc/maps_bloc.dart';
 import 'package:proyecto_progra_movil/maps_screen/bloc/maps_state.dart';
 
@@ -18,10 +19,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(125, 43, 212, 1),
-        title: const Text("Mapa de restaurantes cercanos"),
-      ),
+      appBar: const CustomAppBar(title: 'Mapa de restaurantes cercanos'),
       body: Container(
         alignment: Alignment.bottomCenter,
         child: BlocBuilder<MapBloc, MapState>(builder: (context, state) {
