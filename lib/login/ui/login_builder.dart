@@ -50,6 +50,14 @@ Widget LoginOnWait(emailController, passwordController) {
                 ),
               ),
               const SizedBox(height: 10),
+              const Text(
+                'Bienvenido a RutaGourmet',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -120,8 +128,8 @@ Widget LoginOnWait(emailController, passwordController) {
 }
 
 class _LoginScreenNewState extends State<LoginScreenNew> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +164,6 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
               fit: BoxFit.cover,
             ),
           ),
-          
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

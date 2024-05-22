@@ -6,6 +6,7 @@ import 'package:proyecto_progra_movil/register/bloc/register_bloc.dart';
 import 'package:proyecto_progra_movil/register/bloc/register_event.dart';
 import 'package:proyecto_progra_movil/register/bloc/register_state.dart';
 import 'package:proyecto_progra_movil/app_bar.dart';
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -120,13 +121,15 @@ class _RegisterState extends State<RegisterScreen> {
       ),
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
+    final _formKey = GlobalKey<FormState>();
     return Scaffold(
-      appBar: const CustomAppBar(title: 'RUTA GOURMET',),
-      body: Container(
+        appBar: const CustomAppBar(
+          title: 'RUTA GOURMET',
+        ),
+        body: Container(
           decoration: _buildBackgroundDecoration(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -167,12 +170,12 @@ class _RegisterState extends State<RegisterScreen> {
                               ),
                             ),
                           ),
-                          _buildCardForms(formKey),
+                          _buildCardForms(_formKey),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                final FormState form = formKey.currentState!;
+                                final FormState form = _formKey.currentState!;
                                 if (form.validate()) {
                                   String password =
                                       _passwordController.text.toString();
@@ -250,12 +253,12 @@ class _RegisterState extends State<RegisterScreen> {
                               ),
                             ),
                           ),
-                          _buildRestaurantCard(formKey),
+                          _buildRestaurantCard(_formKey),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                final FormState form = formKey.currentState!;
+                                final FormState form = _formKey.currentState!;
                                 if (form.validate()) {
                                   String password =
                                       _passwordController.text.toString();
@@ -318,7 +321,7 @@ class _RegisterState extends State<RegisterScreen> {
                   _password2Controller.clear();
                   _streetController.clear();
                   _descripcionController.clear();
-                  return _buildCardForms(formKey);
+                  return _buildCardForms(_formKey);
                 }
               }),
             ],
