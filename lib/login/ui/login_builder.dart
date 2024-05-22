@@ -156,6 +156,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
               fit: BoxFit.cover,
             ),
           ),
+          
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
