@@ -81,8 +81,8 @@ class PreferencesView extends StatelessWidget {
                       children: [
                         Image.asset(
                           comida.imagenUrl,
-                          height: 300,
-                          width: 300,
+                          height: 100,
+                          width: 100,
                           fit: BoxFit.cover,
                         ),
                         SizedBox(height: 10),

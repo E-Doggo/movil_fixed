@@ -55,7 +55,7 @@ class HomePage extends StatelessWidget {
                           fixedSize: const Size(300, 60),
                         ),
                         child: const Text(
-                          'Log In',
+                          'Iniciar Sesion',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -72,7 +72,7 @@ class HomePage extends StatelessWidget {
                           fixedSize: const Size(300, 60),
                         ),
                         child: const Text(
-                          'Register',
+                          'Registrarse',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
