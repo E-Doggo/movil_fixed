@@ -123,7 +123,7 @@ class _RegisterState extends State<RegisterScreen> {
   
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: const CustomAppBar(title: 'RUTA GOURMET',),
       body: Container(
@@ -167,12 +167,12 @@ class _RegisterState extends State<RegisterScreen> {
                               ),
                             ),
                           ),
-                          _buildCardForms(_formKey),
+                          _buildCardForms(formKey),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                final FormState form = _formKey.currentState!;
+                                final FormState form = formKey.currentState!;
                                 if (form.validate()) {
                                   String password =
                                       _passwordController.text.toString();
@@ -250,12 +250,12 @@ class _RegisterState extends State<RegisterScreen> {
                               ),
                             ),
                           ),
-                          _buildRestaurantCard(_formKey),
+                          _buildRestaurantCard(formKey),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                final FormState form = _formKey.currentState!;
+                                final FormState form = formKey.currentState!;
                                 if (form.validate()) {
                                   String password =
                                       _passwordController.text.toString();
@@ -318,7 +318,7 @@ class _RegisterState extends State<RegisterScreen> {
                   _password2Controller.clear();
                   _streetController.clear();
                   _descripcionController.clear();
-                  return _buildCardForms(_formKey);
+                  return _buildCardForms(formKey);
                 }
               }),
             ],

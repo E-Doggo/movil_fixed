@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -47,9 +46,9 @@ class PreferencesView extends StatelessWidget {
         return Scaffold(
           appBar: const CustomAppBar(title: 'ESCOGE TUS PREFERENCIAS'),
           body: Container(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 10.0,
                 mainAxisSpacing: 10.0,
@@ -80,7 +79,7 @@ class PreferencesView extends StatelessWidget {
                         SizedBox(height: 10),
                         Text(
                           comida.nombre,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ],
