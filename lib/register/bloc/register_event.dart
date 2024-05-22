@@ -1,3 +1,5 @@
+import 'package:mapbox_gl/mapbox_gl.dart';
+
 class RegisterEvent {
   RegisterEvent();
 }
@@ -32,6 +34,7 @@ class RegisterRestaurant extends RegisterEvent {
   final String restaurantName;
   final String streetName;
   final String description;
+  final LatLng coords;
 
   RegisterRestaurant(
       {required this.email,
@@ -39,7 +42,8 @@ class RegisterRestaurant extends RegisterEvent {
       required this.passwordValidation,
       required this.restaurantName,
       required this.description,
-      required this.streetName});
+      required this.streetName,
+      required this.coords});
 
   @override
   List<Object> get props => [
@@ -48,6 +52,7 @@ class RegisterRestaurant extends RegisterEvent {
         passwordValidation,
         restaurantName,
         description,
-        streetName
+        streetName,
+        coords
       ];
 }

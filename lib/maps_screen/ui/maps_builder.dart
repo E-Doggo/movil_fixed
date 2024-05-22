@@ -41,7 +41,6 @@ class _MapScreenState extends State<MapScreen> {
                   onMapCreated: _onMapCreated,
                   onStyleLoadedCallback: () =>
                       _onStyleLoadedCallback(state.latLng, state.listLocations),
-                  // myLocationEnabled: true,
                   // myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
                   styleString: "mapbox://styles/mapbox/light-v11",
                   minMaxZoomPreference: const MinMaxZoomPreference(14, 30),
