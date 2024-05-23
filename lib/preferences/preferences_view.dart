@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:proyecto_progra_movil/app_bar.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_firestore.dart';
 import 'preferences_cubit.dart';
@@ -44,16 +45,7 @@ class PreferencesView extends StatelessWidget {
     return BlocBuilder<PreferencesCubit, List<String>>(
       builder: (context, selectedPreferences) {
         return Scaffold(
-          appBar: AppBar(
-            title: Text(
-              'ESCOGE TUS PREFERENCIAS',
-              style: TextStyle(
-                color: const Color.fromRGBO(89, 206, 143, 1),
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+          appBar: const CustomAppBar(title: 'ESCOGE TUS PREFERENCIAS'),
           body: Container(
             padding: EdgeInsets.all(10.0),
             child: GridView.builder(
@@ -81,8 +73,8 @@ class PreferencesView extends StatelessWidget {
                       children: [
                         Image.asset(
                           comida.imagenUrl,
-                          height: 300,
-                          width: 300,
+                          height: 100,
+                          width: 100,
                           fit: BoxFit.cover,
                         ),
                         SizedBox(height: 10),
@@ -107,7 +99,7 @@ class PreferencesView extends StatelessWidget {
                 print(email);
                 print(selectedPreferences);
                 await DB.uploadPreferences(email, selectedPreferences);
-                context.go("/");
+                context.go("/mainPage");
               },
               child: Icon(Icons.check),
             ),

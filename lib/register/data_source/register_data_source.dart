@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_firestore.dart';
 
@@ -12,13 +13,13 @@ class RegDataSource {
     }
   }
 
-  Future<void> saveUserDB(
-      String username, String email, String street, String description) async {
+  Future<void> saveUserDB(String username, String email, String street,
+      String description, LatLng coords) async {
     final FireStore DB = FireStore();
 
     if (street.isNotEmpty && description.isNotEmpty) {
       try {
-        await DB.uploadRestaurant(username, email, street, description);
+        await DB.uploadRestaurant(username, email, street, description, coords);
       } catch (e) {
         throw Exception("couldn't upload restaurant found ${e.toString()}");
       }

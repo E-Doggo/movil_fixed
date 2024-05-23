@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:proyecto_progra_movil/app_bar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -7,6 +8,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const CustomAppBar(title: 'RUTA GOURMET'),
       body: Stack(
         children: [
           // Imagen de fondo
@@ -21,25 +23,6 @@ class HomePage extends StatelessWidget {
           ),
           Column(
             children: [
-              const SizedBox(height: 50),
-              Align(
-                alignment: Alignment.topCenter,
-                child: Container(
-                  color: const Color.fromRGBO(89, 206, 143, 1),
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  width: MediaQuery.of(context).size.width,
-                  child: const Center(
-                    child: Text(
-                      'RUTA GOURMET',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
               const Spacer(),
               Padding(
                 padding: const EdgeInsets.only(bottom: 150.0),
@@ -55,7 +38,7 @@ class HomePage extends StatelessWidget {
                           fixedSize: const Size(300, 60),
                         ),
                         child: const Text(
-                          'Log In',
+                          'Iniciar Sesion',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -72,7 +55,7 @@ class HomePage extends StatelessWidget {
                           fixedSize: const Size(300, 60),
                         ),
                         child: const Text(
-                          'Register',
+                          'Registrarse',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
