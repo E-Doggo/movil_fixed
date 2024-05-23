@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:proyecto_progra_movil/preferences/comida.dart';
 
 class FireStore {
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> uploadUser(String username, String email) async {
     CollectionReference collRef = _firestore.collection("users");
@@ -34,12 +35,12 @@ class FireStore {
     }
   }
 
-  Future<void> uploadRestaurant(
-      String resName, String email, String street, String description) async {
+  Future<void> uploadRestaurant(String resName, String email, String street,
+      String description, LatLng latlng) async {
     final String resID = resName.replaceAll(" ", "_");
-    Map<String, int> coordinates = {
-      "xcoords": 0,
-      "ycoords": 0,
+    Map<String, double> coordinates = {
+      "xcoords": latlng.longitude,
+      "ycoords": latlng.latitude,
     };
     //probably will have to change to float at some point
     CollectionReference collRef = _firestore.collection("restaurants");
@@ -81,5 +82,29 @@ class FireStore {
     } catch (e) {
       throw Exception("Couldn't find user in DB");
     }
+  }
+
+  Future<List<Map<String, dynamic>>> getRestaurants() async {
+    try {
+      CollectionReference collRef = _firestore.collection("restaurants");
+      QuerySnapshot querySnapshot = await collRef.get();
+      print(querySnapshot.docs);
+      List<Map<String, dynamic>> restaurants = querySnapshot.docs.map((doc) {
+        return doc.data() as Map<String, dynamic>;
+      }).toList();
+
+      return restaurants;
+    } catch (e) {
+      throw Exception("Unknown error couldnt fetch restaurants");
+    }
+  }
+
+  Future<List> getLocationRestaurants() async {
+    final List restaurants = await getRestaurants();
+    List latLst = [];
+    restaurants.forEach((restaurant) {
+      latLst.add(restaurant["coordinates"]);
+    });
+    return latLst;
   }
 }

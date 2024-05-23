@@ -72,8 +72,8 @@ class PreferencesView extends StatelessWidget {
                       children: [
                         Image.asset(
                           comida.imagenUrl,
-                          height: 300,
-                          width: 300,
+                          height: 100,
+                          width: 100,
                           fit: BoxFit.cover,
                         ),
                         SizedBox(height: 10),
@@ -98,7 +98,7 @@ class PreferencesView extends StatelessWidget {
                 print(email);
                 print(selectedPreferences);
                 await DB.uploadPreferences(email, selectedPreferences);
-                context.go("/");
+                context.go("/mainPage");
               },
               child: Icon(Icons.check),
             ),
