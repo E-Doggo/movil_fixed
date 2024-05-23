@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:proyecto_progra_movil/maps_screen/bloc/maps_bloc.dart';
 import 'package:proyecto_progra_movil/maps_screen/bloc/maps_state.dart';
+import 'package:proyecto_progra_movil/maps_screen/model/symbol_model.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -14,6 +16,7 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   late MapboxMapController mapController;
+  late Map symbolsMap;
 
   @override
   Widget build(BuildContext context) {
@@ -30,26 +33,25 @@ class _MapScreenState extends State<MapScreen> {
               child: const Text("Espere el mapa esta cargando"),
             );
           } else if (state is MapLoadedUser) {
-            dynamic _initialCameraPosition =
-                CameraPosition(target: state.latLng, zoom: 15);
+            symbolsMap = state.symbolsMap;
             return SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: MapboxMap(
-                  accessToken:
-                      "pk.eyJ1IjoiZG9nZ2VyLWUiLCJhIjoiY2x2ZDljMG9uMG42aDJrbGg4aG91M3l4OSJ9.-jl41NBFO9bMJa7H4lisnA",
-                  initialCameraPosition: _initialCameraPosition,
-                  onMapCreated: _onMapCreated,
-                  onStyleLoadedCallback: () =>
-                      _onStyleLoadedCallback(state.latLng, state.listLocations),
-                  // myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
-                  styleString: "mapbox://styles/mapbox/light-v11",
-                  minMaxZoomPreference: const MinMaxZoomPreference(14, 30),
-                ));
-          } else if (state is MapFailedToLoad) {
-            return Container(
-              child: const Text(
-                  "No se pudo cargar el mapa por un error desconocido"),
+              height: MediaQuery.of(context).size.height,
+              child: MapboxMap(
+                accessToken:
+                    "pk.eyJ1IjoiZG9nZ2VyLWUiLCJhIjoiY2x2ZDljMG9uMG42aDJrbGg4aG91M3l4OSJ9.-jl41NBFO9bMJa7H4lisnA",
+                initialCameraPosition:
+                    CameraPosition(target: state.latLng, zoom: 15),
+                onMapCreated: _onMapCreated,
+                onStyleLoadedCallback: () =>
+                    _onStyleLoadedCallback(state.latLng, state.listLocations),
+                // myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
+                styleString: "mapbox://styles/mapbox/light-v11",
+                minMaxZoomPreference: const MinMaxZoomPreference(14, 30),
+              ),
             );
+          } else if (state is MapFailedToLoad) {
+            return const Text(
+                "No se pudo cargar el mapa por un error desconocido");
           }
           return Container();
         }),
@@ -76,13 +78,28 @@ class _MapScreenState extends State<MapScreen> {
 
   _addRestaurantsMarkers(List listLocations) {
     listLocations.forEach(
-      (location) => mapController.addSymbol(
-        SymbolOptions(
+      (location) async {
+        final locationId = location;
+
+        final symbolOptions = SymbolOptions(
           geometry: location,
           iconSize: 1.25,
           iconImage: "assets/images/restaurant.png",
-        ),
-      ),
+        );
+
+        final symbol = await mapController.addSymbol(symbolOptions);
+        symbolsMap[symbol] = locationId;
+      },
     );
+
+    mapController.onSymbolTapped.add(_onSymbolTapped);
+  }
+
+  void _onSymbolTapped(Symbol symbol) {
+    final restaurantId = [symbol];
+    if (restaurantId != null) {
+      print('Clicked restaurant with ID: $restaurantId');
+      // Use the restaurantId to fetch additional details from Firestore or make any other requests
+    }
   }
 }
