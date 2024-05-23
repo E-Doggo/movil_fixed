@@ -101,11 +101,14 @@ class FireStore {
     }
   }
 
-  Future<List> getLocationRestaurants() async {
+  Future<List<Map<String, dynamic>>> getRestaurantMarker() async {
     final List restaurants = await getRestaurants();
-    List latLst = [];
+    List<Map<String, dynamic>> latLst = [];
     restaurants.forEach((restaurant) {
-      latLst.add(restaurant["coordinates"]);
+      latLst.add({
+        "id": restaurant["restaurant_id"],
+        "location": restaurant["coordinates"]
+      });
     });
     return latLst;
   }

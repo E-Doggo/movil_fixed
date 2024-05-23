@@ -16,7 +16,7 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   late MapboxMapController mapController;
-  late Map symbolsMap;
+  Map<Symbol, dynamic> _symbolsMap = {};
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,6 @@ class _MapScreenState extends State<MapScreen> {
               child: const Text("Espere el mapa esta cargando"),
             );
           } else if (state is MapLoadedUser) {
-            symbolsMap = state.symbolsMap;
             return SizedBox(
               height: MediaQuery.of(context).size.height,
               child: MapboxMap(
@@ -79,16 +78,14 @@ class _MapScreenState extends State<MapScreen> {
   _addRestaurantsMarkers(List listLocations) {
     listLocations.forEach(
       (location) async {
-        final locationId = location;
-
         final symbolOptions = SymbolOptions(
-          geometry: location,
+          geometry: location["coordinates"],
           iconSize: 1.25,
           iconImage: "assets/images/restaurant.png",
         );
 
         final symbol = await mapController.addSymbol(symbolOptions);
-        symbolsMap[symbol] = locationId;
+        _symbolsMap[symbol] = location["id"];
       },
     );
 
@@ -96,10 +93,9 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void _onSymbolTapped(Symbol symbol) {
-    final restaurantId = [symbol];
+    final restaurantId = _symbolsMap[symbol];
     if (restaurantId != null) {
       print('Clicked restaurant with ID: $restaurantId');
-      // Use the restaurantId to fetch additional details from Firestore or make any other requests
     }
   }
 }

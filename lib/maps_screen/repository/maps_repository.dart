@@ -38,13 +38,15 @@ class MapRepo {
     sharedPrefs.setDouble('longitude', locationData.longitude!);
   }
 
-  Future<List> getLocationRestaurants() async {
-    List listLngLat = [];
+  Future<List> getLocationResTransformed() async {
+    List<Map<String, dynamic>> listLngLat = [];
     List<dynamic> listLocations = await mapDataSource.getLocationRestaurants();
     listLocations.forEach((location) {
-      listLngLat.add(
-        LatLng(location["ycoords"], location["xcoords"]),
-      );
+      listLngLat.add({
+        "id": location["id"],
+        "coordinates": LatLng(
+            location["location"]["ycoords"], location["location"]["xcoords"]),
+      });
     });
     return listLngLat;
   }
