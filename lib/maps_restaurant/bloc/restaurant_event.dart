@@ -1,5 +1,9 @@
-class RestaurantEvent {}
+class RestaurantEvent {
+  RestaurantEvent();
+}
 
-class RestaurantReview extends RestaurantEvent {}
+class RestaurantFetchedData extends RestaurantEvent {}
 
-class RestaurantFavorite extends RestaurantEvent {}
+class RestaurantAddReview extends RestaurantEvent {}
+
+class RestaurantAddFavorite extends RestaurantEvent {}

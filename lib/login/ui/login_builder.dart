@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:proyecto_progra_movil/app_bar.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_bloc.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_event.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_state.dart';
@@ -40,7 +41,7 @@ Widget LoginOnWait(emailController, passwordController) {
                 child: const Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text(
-                    'Login',
+                    'Inicio de Sesion',
                     style: TextStyle(
                       fontSize: 18.0,
                       color: Colors.white,
@@ -58,14 +59,14 @@ Widget LoginOnWait(emailController, passwordController) {
               ),
               const SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     TextFormField(
                       controller: emailController,
                       decoration: const InputDecoration(
-                        labelText: 'Usuario',
+                        labelText: 'Correo',
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -79,22 +80,25 @@ Widget LoginOnWait(emailController, passwordController) {
                   ],
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  String username = emailController.text.toString();
-                  String password = passwordController.text.toString();
-                  if (username.isNotEmpty && password.isNotEmpty) {
-                    context
-                        .read<LoginBloc>()
-                        .add(LoginInput(email: username, password: password));
-                  }
-                },
-                style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll<Color>(
-                      Color.fromARGB(255, 89, 206, 144)),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    String username = emailController.text.toString();
+                    String password = passwordController.text.toString();
+                    if (username.isNotEmpty && password.isNotEmpty) {
+                      context
+                          .read<LoginBloc>()
+                          .add(LoginInput(email: username, password: password));
+                    }
+                  },
+                  style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll<Color>(
+                        Color.fromARGB(255, 89, 206, 144)),
+                  ),
+                  child: const Text('Iniciar Sesion',
+                      style: TextStyle(color: Colors.white)),
                 ),
-                child:
-                    const Text('Log in', style: TextStyle(color: Colors.white)),
               ),
               TextButton(
                 onPressed: () {},
@@ -106,15 +110,18 @@ Widget LoginOnWait(emailController, passwordController) {
                   ),
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  context.go("/register");
-                },
-                child: const Text(
-                  'Eres nuevo registrate',
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    decorationColor: Color.fromRGBO(89, 206, 143, 1),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextButton(
+                  onPressed: () {
+                    context.go("/register");
+                  },
+                  child: const Text(
+                    'Eres nuevo, registrate',
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      decorationColor: Color.fromRGBO(89, 206, 143, 1),
+                    ),
                   ),
                 ),
               ),
@@ -154,71 +161,59 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
     );
 
     return Scaffold(
+        appBar: const CustomAppBar(title: 'RUTA GOURMET'),
         body: Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/silpancho-background-homepage.jpg'),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            color: const Color.fromARGB(255, 89, 206, 144), // Fondo verde
-            padding:
-                const EdgeInsets.symmetric(vertical: 1.0), // Ajustar espaciado
-            alignment: Alignment.center,
-            child: const Text(
-              'RUTA GOURMET',
-              style: TextStyle(
-                fontSize: 36.0,
-                fontStyle: FontStyle.italic,
-                color: Colors.white,
-              ),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image:
+                  AssetImage('assets/images/silpancho-background-homepage.jpg'),
+              fit: BoxFit.cover,
             ),
           ),
-          BlocBuilder<LoginBloc, LoginState>(
-            builder: (context, state) {
-              if (state is LoginWaiting) {
-                return Column(
-                  children: [
-                    LoginOnWait(_emailController, _passwordController),
-                  ],
-                );
-              } else if (state is LoginSuccesfulPrefs) {
-                return AlertDialog(
-                  title: const Text("Login Exitoso"),
-                  content: Text("Bienvenido a Ruta Gourmet ${state.email}"),
-                  actions: [
-                    okButtonMain,
-                  ],
-                );
-              } else if (state is LoginSuccesfulNoPrefs) {
-                return AlertDialog(
-                  title: const Text("Login Exitoso"),
-                  content: Text("Bienvenido a Ruta Gourmet ${state.email}"),
-                  actions: [
-                    // okButtonMain,
-                    okButtonPrefs
-                  ],
-                );
-              } else if (state is LoginFailed) {
-                _passwordController.clear();
-                return AlertDialog(
-                  title: const Text("Login Fallido"),
-                  content: const Text("reintente ingresar sus datos"),
-                  actions: [
-                    okButtonFailed,
-                  ],
-                );
-              } else {
-                return Container();
-              }
-            },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              BlocBuilder<LoginBloc, LoginState>(
+                builder: (context, state) {
+                  if (state is LoginWaiting) {
+                    return Column(
+                      children: [
+                        LoginOnWait(_emailController, _passwordController),
+                      ],
+                    );
+                  } else if (state is LoginSuccesfulPrefs) {
+                    return AlertDialog(
+                      title: const Text("Inicio de Sesion Exitoso"),
+                      content: Text("Bienvenido a Ruta Gourmet ${state.email}"),
+                      actions: [
+                        okButtonMain,
+                      ],
+                    );
+                  } else if (state is LoginSuccesfulNoPrefs) {
+                    return AlertDialog(
+                      title: const Text("Inicio de Sesion Exitoso"),
+                      content: Text("Bienvenido a Ruta Gourmet ${state.email}"),
+                      actions: [
+                        // okButtonMain,
+                        okButtonPrefs
+                      ],
+                    );
+                  } else if (state is LoginFailed) {
+                    _passwordController.clear();
+                    return AlertDialog(
+                      title: const Text("Inicio de Sesion Fallido"),
+                      content: const Text("Correo o contrasena incorrecta"),
+                      actions: [
+                        okButtonFailed,
+                      ],
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
+            ],
           ),
-        ],
-      ),
-    ));
+        ));
   }
 }

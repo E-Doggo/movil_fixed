@@ -18,7 +18,3 @@ class MapLoadedUser extends MapState {
 
   List<Object> get props => [latLng, listLocations, symbolsMap];
 }
-
-class MapRestaurantCard extends MapLoadedUser {
-  MapRestaurantCard({required super.latLng, required super.listLocations});
-}

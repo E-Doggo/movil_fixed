@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proyecto_progra_movil/home_page.dart';
 import 'package:proyecto_progra_movil/login/ui/login_provider.dart';
+import 'package:proyecto_progra_movil/maps_restaurant/ui/restaurant_provider.dart';
 import 'package:proyecto_progra_movil/maps_screen/ui/maps_provider.dart';
 import 'package:proyecto_progra_movil/preferences/preferences_screen.dart';
 import 'package:proyecto_progra_movil/register/ui/bloc_provider.dart';
@@ -51,11 +52,19 @@ final GoRouter _router = GoRouter(
           },
         ),
         GoRoute(
-          path: 'mainPage',
-          builder: (BuildContext context, GoRouterState state) {
-            return const MapProvider();
-          },
-        ),
+            path: 'mainPage',
+            builder: (BuildContext context, GoRouterState state) {
+              return const MapProvider();
+            },
+            routes: <RouteBase>[
+              GoRoute(
+                name: "restaurant-info",
+                path: 'restaurant-info',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const RestaurantProvider();
+                },
+              ),
+            ]),
       ],
     ),
   ],

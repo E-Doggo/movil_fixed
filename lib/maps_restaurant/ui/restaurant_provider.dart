@@ -12,7 +12,10 @@ class RestaurantProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => RestaurantBloc(
-          resRepo: RestaurantRepo(resDataSource: RestaurantData())),
+        resRepo: RestaurantRepo(
+          resDataSource: RestaurantData(),
+        ),
+      ),
       child: const RestaurantBuilder(),
     );
   }
