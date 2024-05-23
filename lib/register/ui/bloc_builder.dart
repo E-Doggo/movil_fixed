@@ -9,6 +9,7 @@ import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth
 import 'package:proyecto_progra_movil/register/bloc/register_bloc.dart';
 import 'package:proyecto_progra_movil/register/bloc/register_event.dart';
 import 'package:proyecto_progra_movil/register/bloc/register_state.dart';
+import 'package:proyecto_progra_movil/app_bar.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -130,7 +131,6 @@ class _RegisterState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-
     return Scaffold(
         appBar: const CustomAppBar(title: 'RUTA GOURMET'),
         body: Container(

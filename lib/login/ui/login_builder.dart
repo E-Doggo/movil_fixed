@@ -161,9 +161,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
     );
 
     return Scaffold(
-        appBar: const CustomAppBar(
-          title: "RUTA GOURMET",
-        ),
+        appBar: const CustomAppBar(title: 'RUTA GOURMET'),
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
