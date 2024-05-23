@@ -10,6 +10,6 @@ class RestaurantBuilder extends StatefulWidget {
 class _RestaurantBuilderState extends State<RestaurantBuilder> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Stack();
   }
 }
