@@ -61,7 +61,10 @@ final GoRouter _router = GoRouter(
                 name: "restaurant-info",
                 path: 'restaurant-info',
                 builder: (BuildContext context, GoRouterState state) {
-                  return const RestaurantProvider();
+                  dynamic resturant_id = state.extra;
+                  return RestaurantProvider(
+                    parameter: resturant_id,
+                  );
                 },
               ),
             ]),

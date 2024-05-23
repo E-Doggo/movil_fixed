@@ -5,16 +5,11 @@ class RestaurantState {
 class RestaurantLoading extends RestaurantState {}
 
 class RestaurantLoaded extends RestaurantState {
-  final String id_restaurant;
-  final bool favorite;
-  final int stars;
+  final Map<String, dynamic> restaruantInfo;
 
-  RestaurantLoaded(
-      {required this.id_restaurant,
-      required this.favorite,
-      required this.stars});
+  RestaurantLoaded({required this.restaruantInfo});
 
-  List<Object> get props => [id_restaurant];
+  List<Object> get props => [restaruantInfo];
 }
 
 class RestaurantLoadingFailed extends RestaurantState {}

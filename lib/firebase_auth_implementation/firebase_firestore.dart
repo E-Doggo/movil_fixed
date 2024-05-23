@@ -90,7 +90,6 @@ class FireStore {
     try {
       CollectionReference collRef = _firestore.collection("restaurants");
       QuerySnapshot querySnapshot = await collRef.get();
-      print(querySnapshot.docs);
       List<Map<String, dynamic>> restaurants = querySnapshot.docs.map((doc) {
         return doc.data() as Map<String, dynamic>;
       }).toList();
@@ -111,5 +110,20 @@ class FireStore {
       });
     });
     return latLst;
+  }
+
+  Future<Map<String, dynamic>?> getRestaurantById(String id) async {
+    CollectionReference collRef = _firestore.collection("restaurants");
+    QuerySnapshot querySnapshot =
+        await collRef.where("restaurant-id", isEqualTo: id).get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      try {
+        final DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+        return documentSnapshot.data() as Map<String, dynamic>?;
+      } catch (e) {
+        throw Exception("Error: ${e.toString()}");
+      }
+    }
   }
 }

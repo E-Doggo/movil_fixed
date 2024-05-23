@@ -6,12 +6,14 @@ import 'package:proyecto_progra_movil/maps_restaurant/repository/restaurant_repo
 import 'package:proyecto_progra_movil/maps_restaurant/ui/restaurant_builder.dart';
 
 class RestaurantProvider extends StatelessWidget {
-  const RestaurantProvider({super.key});
+  final dynamic parameter;
+  const RestaurantProvider({super.key, required this.parameter});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => RestaurantBloc(
+        parameter: parameter,
         resRepo: RestaurantRepo(
           resDataSource: RestaurantData(),
         ),

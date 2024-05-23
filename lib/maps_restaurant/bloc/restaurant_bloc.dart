@@ -5,16 +5,24 @@ import 'package:proyecto_progra_movil/maps_restaurant/repository/restaurant_repo
 
 class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
   final RestaurantRepo resRepo;
+  final String parameter;
 
-  RestaurantBloc({required this.resRepo}) : super(RestaurantLoading()) {
+  RestaurantBloc({required this.resRepo, required this.parameter})
+      : super(RestaurantLoading()) {
     on<RestaurantFetchedData>((event, emit) async {
-      emit(RestaurantLoaded(
-          id_restaurant: "1", favorite: false, stars: 4)); // Mock data
+      final restaruantInfo =
+          await resRepo.getRestuarantInfo(event.parameter_id);
+      emit(RestaurantLoaded(restaruantInfo: restaruantInfo)); // Mock data
     });
     _init();
   }
 
-  void _init() {
-    add(RestaurantFetchedData());
+  void _init() async {
+    try {
+      await resRepo.getRestuarantInfo(parameter);
+      add(RestaurantFetchedData(parameter_id: parameter));
+    } catch (e) {
+      emit(RestaurantLoadingFailed());
+    }
   }
 }
