@@ -6,6 +6,8 @@ class MapState {
 
 class MapLoading extends MapState {}
 
+class MapFailedToLoad extends MapState {}
+
 class MapLoadedUser extends MapState {
   LatLng latLng;
 
@@ -17,6 +19,6 @@ class MapLoadedUser extends MapState {
   List<Object> get props => [latLng, listLocations, symbolsMap];
 }
 
-class MapSelectedRestaurant extends MapState {}
-
-class MapFailedToLoad extends MapState {}
+class MapRestaurantCard extends MapLoadedUser {
+  MapRestaurantCard({required super.latLng, required super.listLocations});
+}

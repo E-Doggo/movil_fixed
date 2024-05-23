@@ -1,4 +1,4 @@
-import 'package:proyecto_progra_movil/restaurant_info/datasource/restaurant_data_source.dart';
+import 'package:proyecto_progra_movil/maps_restaurant/datasource/restaurant_data_source.dart';
 
 class RestaurantRepo {
   RestaurantData resDataSource;

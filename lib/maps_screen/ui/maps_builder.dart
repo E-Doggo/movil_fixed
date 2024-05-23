@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:proyecto_progra_movil/maps_restaurant/bloc/restaurant_bloc.dart';
+import 'package:proyecto_progra_movil/maps_restaurant/bloc/restaurant_state.dart';
 import 'package:proyecto_progra_movil/maps_screen/bloc/maps_bloc.dart';
 import 'package:proyecto_progra_movil/maps_screen/bloc/maps_state.dart';
 import 'package:proyecto_progra_movil/maps_screen/model/symbol_model.dart';
@@ -17,6 +19,7 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   late MapboxMapController mapController;
   Map<Symbol, dynamic> _symbolsMap = {};
+  late String _selectedRestaurant = "";
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +56,12 @@ class _MapScreenState extends State<MapScreen> {
               onStyleLoadedCallback: () =>
                   _onStyleLoadedCallback(state.latLng, state.listLocations),
               // myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
+              onMapClick: (point, coordinates) {
+                if (_selectedRestaurant.isNotEmpty) {
+                  print("Si se pudo");
+                  context.go("/");
+                }
+              },
               styleString: "mapbox://styles/mapbox/light-v11",
               minMaxZoomPreference: const MinMaxZoomPreference(14, 30),
             ),
@@ -96,14 +105,13 @@ class _MapScreenState extends State<MapScreen> {
         _symbolsMap[symbol] = location["id"];
       },
     );
-
     mapController.onSymbolTapped.add(_onSymbolTapped);
   }
 
   void _onSymbolTapped(Symbol symbol) {
     final restaurantId = _symbolsMap[symbol];
     if (restaurantId != null) {
-      print('Clicked restaurant with ID: $restaurantId');
+      _selectedRestaurant = restaurantId;
     }
   }
 }
