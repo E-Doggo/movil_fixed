@@ -355,7 +355,7 @@ class _RegisterState extends State<RegisterScreen> {
                     );
                   } else if (state is RegisterSuccesful) {
                     context.go("/preferences");
-                    return const Text("REGISTRO EXITOSO");
+                    return const Text("");
                   } else {
                     _userController.clear();
                     _emailController.clear();
