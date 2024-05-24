@@ -1,4 +1,4 @@
-package com.example.movil_fixed
+package com.rutagourmet.movil_fixed
 
 import io.flutter.embedding.android.FlutterActivity
 

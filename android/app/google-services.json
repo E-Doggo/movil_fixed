@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:732543311140:android:764d496790e8af82e627b1",
         "android_client_info": {
-          "package_name": "com.example.fix_movil"
+          "package_name": "com.rutagourmet.fix_movil"
         }
       },
       "oauth_client": [],
@@ -28,7 +28,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:732543311140:android:d9b426435d078aa4e627b1",
         "android_client_info": {
-          "package_name": "com.example.proyecto_progra_movil"
+          "package_name": "com.rutagourmet.proyecto_progra_movil"
         }
       },
       "oauth_client": [],
