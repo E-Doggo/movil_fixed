@@ -8,7 +8,35 @@ class RestaurantData {
           await _fireStore.getRestaurantById(id);
       return restaurantInfo;
     } catch (e) {
-      Exception("Error couldnt fetch $e");
+      throw Exception("Error couldnt fetch $e");
+    }
+  }
+
+  Future<void> addResToFavs(String idRestaurant) async {
+    FireStore _fireStore = FireStore();
+    try {
+      await _fireStore.addResToFavs(idRestaurant);
+    } catch (e) {
+      throw Exception("Couldnt add restaurant to user favorites");
+    }
+  }
+
+  Future<void> deleteFavoriteRestaurant(String idRestaurant) async {
+    FireStore _fireStore = FireStore();
+    try {
+      await _fireStore.deleteResFromFavs(idRestaurant);
+    } catch (e) {
+      throw Exception("Couldnt add restaurant to user favorites");
+    }
+  }
+
+  Future<List> getUserFavorites() async {
+    FireStore _fireStore = FireStore();
+    try {
+      final userData = await _fireStore.getUserInfo();
+      return userData!["favorites"];
+    } catch (e) {
+      throw Exception("Couldnt add restaurant to user favorites");
     }
   }
 }

@@ -11,14 +11,38 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
       : super(RestaurantLoading()) {
     _init();
     on<RestaurantFetchedData>((event, emit) async {
-      emit(RestaurantLoaded(restaruantInfo: event.resInfo)); // Mock data
+      emit(RestaurantLoaded(
+          restaruantInfo: event.resInfo,
+          restaurantFavorite: event.isFavorite)); // Mock data
+    });
+    on<RestaurantAddFavorite>((event, emit) async {
+      try {
+        await resRepo.addResturantFavorite(event.resID);
+        emit(RestaurantLoaded(
+            restaruantInfo: event.resInfo, restaurantFavorite: true));
+      } catch (e) {
+        Exception("Couldnt add to favorites due to unknown error");
+      }
+    });
+
+    on<RestaurantDeleteFavorite>((event, emit) async {
+      try {
+        await resRepo.deleteFavoriteRes(event.resID);
+        emit(RestaurantLoaded(
+            restaruantInfo: event.resInfo, restaurantFavorite: false));
+      } catch (e) {
+        Exception("Couldnt add to favorites due to unknown error");
+      }
     });
   }
 
   void _init() async {
     try {
       final restaruantInfo = await resRepo.getRestuarantInfo(parameter);
-      add(RestaurantFetchedData(resInfo: restaruantInfo));
+      final isFavorite =
+          await resRepo.isResFavorite(restaruantInfo["restaurant_id"]);
+      add(RestaurantFetchedData(
+          resInfo: restaruantInfo, isFavorite: isFavorite));
     } catch (e) {
       emit(RestaurantLoadingFailed());
     }

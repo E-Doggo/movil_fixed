@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/preferences/comida.dart';
 
 class FireStore {
@@ -132,11 +134,66 @@ class FireStore {
     return latLst;
   }
 
+  Future<QuerySnapshot> getCurrentUserDocs() async {
+    FireBaseAuthService _auth = FireBaseAuthService();
+    CollectionReference collRef = _firestore.collection("users");
+    final String? userEmail = await _auth.getCurrentUser();
+    QuerySnapshot querySnapshot =
+        await collRef.where("email", isEqualTo: userEmail).get();
+    return querySnapshot;
+  }
+
   Future<Map<String, dynamic>?> getRestaurantById(String id) async {
     CollectionReference collRef = _firestore.collection("restaurants");
     QuerySnapshot querySnapshot =
         await collRef.where("restaurant_id", isEqualTo: id).get();
 
+    if (querySnapshot.docs.isNotEmpty) {
+      try {
+        final DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+        return documentSnapshot.data() as Map<String, dynamic>?;
+      } catch (e) {
+        throw Exception("Error: ${e.toString()}");
+      }
+    }
+  }
+
+  Future<void> addResToFavs(String idRestaurant) async {
+    QuerySnapshot querySnapshot = await getCurrentUserDocs();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      try {
+        final DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+        final DocumentReference documentRef = documentSnapshot.reference;
+
+        await documentRef.update({
+          "favorites": FieldValue.arrayUnion([idRestaurant]),
+        });
+      } catch (e) {
+        throw Exception("Error: ${e.toString()}");
+      }
+    }
+  }
+
+  Future<void> deleteResFromFavs(String idRestaurant) async {
+    QuerySnapshot querySnapshot = await getCurrentUserDocs();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      try {
+        final DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+        final DocumentReference documentRef = documentSnapshot.reference;
+
+        await documentRef.update({
+          "favorites": FieldValue.arrayRemove([idRestaurant]),
+        });
+      } catch (e) {
+        throw Exception("Error: ${e.toString()}");
+      }
+    }
+  }
+
+  Future<Map<String, dynamic>?> getUserInfo() async {
+    QuerySnapshot querySnapshot = await getCurrentUserDocs();
     if (querySnapshot.docs.isNotEmpty) {
       try {
         final DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
