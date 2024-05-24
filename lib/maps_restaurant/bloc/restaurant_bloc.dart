@@ -9,18 +9,16 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
 
   RestaurantBloc({required this.resRepo, required this.parameter})
       : super(RestaurantLoading()) {
-    on<RestaurantFetchedData>((event, emit) async {
-      final restaruantInfo =
-          await resRepo.getRestuarantInfo(event.parameter_id);
-      emit(RestaurantLoaded(restaruantInfo: restaruantInfo)); // Mock data
-    });
     _init();
+    on<RestaurantFetchedData>((event, emit) async {
+      emit(RestaurantLoaded(restaruantInfo: event.resInfo)); // Mock data
+    });
   }
 
   void _init() async {
     try {
-      await resRepo.getRestuarantInfo(parameter);
-      add(RestaurantFetchedData(parameter_id: parameter));
+      final restaruantInfo = await resRepo.getRestuarantInfo(parameter);
+      add(RestaurantFetchedData(resInfo: restaruantInfo));
     } catch (e) {
       emit(RestaurantLoadingFailed());
     }

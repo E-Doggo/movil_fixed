@@ -3,11 +3,11 @@ class RestaurantEvent {
 }
 
 class RestaurantFetchedData extends RestaurantEvent {
-  final String parameter_id;
+  final Map<String, dynamic> resInfo;
 
-  RestaurantFetchedData({required this.parameter_id});
+  RestaurantFetchedData({required this.resInfo});
 
-  List<Object> get props => [parameter_id];
+  List<Object> get props => [resInfo];
 }
 
 class RestaurantAddReview extends RestaurantEvent {}

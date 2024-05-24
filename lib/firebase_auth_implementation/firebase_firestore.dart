@@ -115,7 +115,7 @@ class FireStore {
   Future<Map<String, dynamic>?> getRestaurantById(String id) async {
     CollectionReference collRef = _firestore.collection("restaurants");
     QuerySnapshot querySnapshot =
-        await collRef.where("restaurant-id", isEqualTo: id).get();
+        await collRef.where("restaurant_id", isEqualTo: id).get();
 
     if (querySnapshot.docs.isNotEmpty) {
       try {

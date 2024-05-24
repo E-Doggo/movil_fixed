@@ -103,7 +103,7 @@ class _MapScreenState extends State<MapScreen> {
   void _onSymbolTapped(Symbol symbol) {
     final restaurantId = _symbolsMap[symbol];
     if (restaurantId != null) {
-      context.goNamed("restaurant-info");
+      context.goNamed("restaurant-info", extra: restaurantId);
     }
   }
 }
