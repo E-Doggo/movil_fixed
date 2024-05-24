@@ -4,8 +4,8 @@ class RestaurantEvent {
 
 class RestaurantFetchedData extends RestaurantEvent {
   final Map<String, dynamic> resInfo;
-
-  RestaurantFetchedData({required this.resInfo});
+  final bool isFavorite;
+  RestaurantFetchedData({required this.resInfo, required this.isFavorite});
 
   List<Object> get props => [resInfo];
 }
