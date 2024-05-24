@@ -197,10 +197,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                     return AlertDialog(
                       title: const Text("Inicio de Sesion Exitoso"),
                       content: Text("Bienvenido a Ruta Gourmet ${state.email}"),
-                      actions: [
-                        // okButtonMain,
-                        okButtonPrefs
-                      ],
+                      actions: [okButtonPrefs],
                     );
                   } else if (state is LoginFailed) {
                     _passwordController.clear();

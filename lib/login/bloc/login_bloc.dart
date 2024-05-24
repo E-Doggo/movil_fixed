@@ -36,7 +36,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       try {
         final List<String>? listPrefs =
             await loginRepo.getUserPreferences(event.email);
-        if (listPrefs!.isNotEmpty) {
+        if (listPrefs!.isEmpty) {
           emit(LoginSuccesfulNoPrefs(email: event.email));
         } else {
           emit(LoginSuccesfulPrefs(email: event.email));
