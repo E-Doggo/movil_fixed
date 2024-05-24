@@ -12,7 +12,7 @@ class MapBloc extends Bloc<MapEvents, MapState> {
     on<MapLoadedData>((event, emit) async {
       try {
         LatLng latLng = await mapRepo.getLatLngFromSharedPrefs();
-        List<dynamic> listLocations = await mapRepo.getLocationRestaurants();
+        List<dynamic> listLocations = await mapRepo.getLocationResTransformed();
         emit(MapLoadedUser(latLng: latLng, listLocations: listLocations));
       } catch (e) {
         emit(MapFailedToLoad());

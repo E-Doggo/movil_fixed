@@ -6,6 +6,8 @@ class LoginState {
 
 class LoginWaiting extends LoginState {}
 
+class LoginValidating extends LoginState {}
+
 class LoginSuccesfulNoPrefs extends LoginState {
   String email;
 

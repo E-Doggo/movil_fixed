@@ -8,8 +8,6 @@ class FireBaseAuthService {
       User? user = _auth.currentUser;
       if (user != null) {
         return user.email;
-      } else {
-        return null;
       }
     } catch (e) {
       throw Exception("No se pudo obtener el usuario actual: ${e.toString()}");

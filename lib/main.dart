@@ -2,8 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
+import 'package:proyecto_progra_movil/api/firebase_api.dart';
 import 'package:proyecto_progra_movil/home_page.dart';
 import 'package:proyecto_progra_movil/login/ui/login_provider.dart';
+import 'package:proyecto_progra_movil/maps_restaurant/ui/restaurant_provider.dart';
 import 'package:proyecto_progra_movil/maps_screen/ui/maps_provider.dart';
 import 'package:proyecto_progra_movil/preferences/preferences_screen.dart';
 import 'package:proyecto_progra_movil/register/ui/bloc_provider.dart';
@@ -20,7 +22,7 @@ Future main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  await FirebaseAPI().initNotification();
   runApp(const MyApp());
 }
 
@@ -51,11 +53,22 @@ final GoRouter _router = GoRouter(
           },
         ),
         GoRoute(
-          path: 'mainPage',
-          builder: (BuildContext context, GoRouterState state) {
-            return const MapProvider();
-          },
-        ),
+            path: 'mainPage',
+            builder: (BuildContext context, GoRouterState state) {
+              return const MapProvider();
+            },
+            routes: <RouteBase>[
+              GoRoute(
+                name: "restaurant-info",
+                path: 'restaurant-info',
+                builder: (BuildContext context, GoRouterState state) {
+                  dynamic resturant_id = state.extra;
+                  return RestaurantProvider(
+                    parameter: resturant_id,
+                  );
+                },
+              ),
+            ]),
       ],
     ),
   ],

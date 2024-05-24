@@ -10,6 +10,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({required this.loginRepo}) : super(LoginWaiting()) {
     on<LoginInput>((event, emit) async {
       try {
+        emit(LoginValidating());
         final validation =
             await loginRepo.authenticateData(event.email, event.password);
         if (validation == true) {
@@ -35,7 +36,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       try {
         final List<String>? listPrefs =
             await loginRepo.getUserPreferences(event.email);
-        if (listPrefs!.isNotEmpty) {
+        if (listPrefs!.isEmpty) {
           emit(LoginSuccesfulNoPrefs(email: event.email));
         } else {
           emit(LoginSuccesfulPrefs(email: event.email));
