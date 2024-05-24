@@ -74,7 +74,7 @@ class _RestaurantBuilderState extends State<RestaurantBuilder> {
                       ? ElevatedButton(
                           onPressed: () {
                             context.read<RestaurantBloc>().add(
-                                RestaurantAddFavorite(
+                                RestaurantDeleteFavorite(
                                     resID: resInfo["restaurant_id"],
                                     resInfo: resInfo));
                           },
