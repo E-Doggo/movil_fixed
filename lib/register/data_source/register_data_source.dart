@@ -19,7 +19,13 @@ class RegDataSource {
 
     if (street.isNotEmpty && description.isNotEmpty) {
       try {
-        await DB.uploadRestaurant(username, email, street, description, coords);
+        final String resID = username.replaceAll(" ", "_");
+        Map<String, double> coordinates = {
+          "xcoords": coords.longitude,
+          "ycoords": coords.latitude,
+        };
+        await DB.uploadRestaurant(
+            username, email, street, description, coordinates, resID);
       } catch (e) {
         throw Exception("couldn't upload restaurant found ${e.toString()}");
       }

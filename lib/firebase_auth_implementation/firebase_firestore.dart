@@ -36,22 +36,44 @@ class FireStore {
   }
 
   Future<void> uploadRestaurant(String resName, String email, String street,
-      String description, LatLng latlng) async {
-    final String resID = resName.replaceAll(" ", "_");
-    Map<String, double> coordinates = {
-      "xcoords": latlng.longitude,
-      "ycoords": latlng.latitude,
-    };
+      String description, Map latlng, String resID) async {
+    List<Map<String, String>> menu = [
+      {
+        "dish": "Nombre platillo predeterminado",
+        "description": "No es un platillo es un perro con chulo",
+        "photoURL":
+            "https://cc-prod.scene7.com/is/image/CCProdAuthor/What-is-Stock-Photography_P1_mobile",
+      },
+      {
+        "dish": "Nombre platillo predeterminado",
+        "description": "No es un platillo es un perro con chulo",
+        "photoURL":
+            "https://cc-prod.scene7.com/is/image/CCProdAuthor/What-is-Stock-Photography_P1_mobile",
+      },
+      {
+        "dish": "Nombre platillo predeterminado",
+        "description": "No es un platillo es un perro con chulo",
+        "photoURL":
+            "https://cc-prod.scene7.com/is/image/CCProdAuthor/What-is-Stock-Photography_P1_mobile",
+      },
+      {
+        "dish": "Nombre platillo predeterminado",
+        "description": "No es un platillo es un perro con chulo",
+        "photoURL":
+            "https://cc-prod.scene7.com/is/image/CCProdAuthor/What-is-Stock-Photography_P1_mobile",
+      },
+    ];
     //probably will have to change to float at some point
     CollectionReference collRef = _firestore.collection("restaurants");
     await collRef.add({
-      "coordinates": coordinates,
+      "coordinates": latlng,
       "description": description,
       "email": email,
       "logo": "",
       "name": resName,
       "restaurant_id": resID,
       "street": street,
+      "menu": menu,
     });
   }
 
@@ -88,7 +110,6 @@ class FireStore {
     try {
       CollectionReference collRef = _firestore.collection("restaurants");
       QuerySnapshot querySnapshot = await collRef.get();
-      print(querySnapshot.docs);
       List<Map<String, dynamic>> restaurants = querySnapshot.docs.map((doc) {
         return doc.data() as Map<String, dynamic>;
       }).toList();
@@ -99,12 +120,30 @@ class FireStore {
     }
   }
 
-  Future<List> getLocationRestaurants() async {
+  Future<List<Map<String, dynamic>>> getRestaurantMarker() async {
     final List restaurants = await getRestaurants();
-    List latLst = [];
+    List<Map<String, dynamic>> latLst = [];
     restaurants.forEach((restaurant) {
-      latLst.add(restaurant["coordinates"]);
+      latLst.add({
+        "id": restaurant["restaurant_id"],
+        "location": restaurant["coordinates"]
+      });
     });
     return latLst;
+  }
+
+  Future<Map<String, dynamic>?> getRestaurantById(String id) async {
+    CollectionReference collRef = _firestore.collection("restaurants");
+    QuerySnapshot querySnapshot =
+        await collRef.where("restaurant_id", isEqualTo: id).get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      try {
+        final DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+        return documentSnapshot.data() as Map<String, dynamic>?;
+      } catch (e) {
+        throw Exception("Error: ${e.toString()}");
+      }
+    }
   }
 }
