@@ -16,7 +16,13 @@ class RegisterWaitingRestaurant extends RegisterState {
   List<Object> get props => [latLng];
 }
 
-class RegisterValidatingRestaurant extends RegisterState {}
+class RegisterValidatingRestaurant extends RegisterState {
+  LatLng latLng;
+
+  RegisterValidatingRestaurant({required this.latLng});
+
+  List<Object> get props => [latLng];
+}
 
 class RegisterSuccesful extends RegisterState {
   // Aqui poner el firstTime = false

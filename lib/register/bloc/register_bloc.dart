@@ -33,7 +33,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
     on<RegisterRestaurant>((event, emit) async {
       try {
-        emit(RegisterValidatingRestaurant());
+        LatLng latlng = await mapRepo.getLatLngFromSharedPrefs();
+        emit(RegisterValidatingRestaurant(latLng: latlng));
         await registerRepo.passwordValidation(event.password,
             event.passwordValidation, event.email, event.restaurantName,
             street: event.streetName,

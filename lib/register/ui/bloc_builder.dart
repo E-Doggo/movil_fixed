@@ -214,119 +214,6 @@ class _RegisterState extends State<RegisterScreen> {
     );
   }
 
-  Widget _registerResCard(_formKey, state, validating) {
-    dynamic _initialCameraPosition =
-        CameraPosition(target: state.latLng, zoom: 15);
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Card(
-        color: const Color.fromARGB(255, 255, 255, 255),
-        elevation: 8.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: double.infinity,
-              alignment: Alignment.center,
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 89, 206, 144),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10.0),
-                  topRight: Radius.circular(10.0),
-                ),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text(
-                  'Register',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            Column(
-              children: [
-                _buildRestaurantCard(_formKey),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  child: MapboxMap(
-                    accessToken:
-                        "pk.eyJ1IjoiZG9nZ2VyLWUiLCJhIjoiY2x2ZDljMG9uMG42aDJrbGg4aG91M3l4OSJ9.-jl41NBFO9bMJa7H4lisnA",
-                    initialCameraPosition: _initialCameraPosition,
-                    onMapCreated: _onMapCreated,
-                    onMapClick: (Point<double> point, LatLng coordinates) {
-                      _addMarkerToSelectedPoint(coordinates);
-                      state.latLng = coordinates;
-                    },
-                    styleString: "mapbox://styles/mapbox/light-v11",
-                    minMaxZoomPreference: const MinMaxZoomPreference(14, 30),
-                  ),
-                )
-              ],
-            ),
-            validating
-                ? const Padding(
-                    padding: EdgeInsets.all(12.0),
-                    child: CircularProgressIndicator(),
-                  )
-                : Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        final FormState form = _formKey.currentState!;
-                        if (form.validate()) {
-                          String password = _passwordController.text.toString();
-                          String email = _emailController.text.toString();
-                          String passwordValidation =
-                              _password2Controller.text.toString();
-                          String username = _userController.text.toString();
-                          String description =
-                              _descripcionController.text.toString();
-                          String street = _streetController.text.toString();
-                          context.read<RegisterBloc>().add(
-                                RegisterRestaurant(
-                                    email: email,
-                                    password: password,
-                                    passwordValidation: passwordValidation,
-                                    restaurantName: username,
-                                    description: description,
-                                    streetName: street,
-                                    coords: state.latLng),
-                              );
-                        }
-                      },
-                      style: const ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(
-                            Color.fromARGB(255, 89, 206, 144)),
-                      ),
-                      child: const Text("Registrarse",
-                          style: TextStyle(color: Colors.white)),
-                    ),
-                  ),
-            TextButton(
-              onPressed: () {
-                context.read<RegisterBloc>().add(RegisterChange(type: 0));
-              },
-              child: const Text(
-                'Registrate como usuario',
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  decorationColor: Color.fromRGBO(89, 206, 143, 1),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
@@ -349,12 +236,212 @@ class _RegisterState extends State<RegisterScreen> {
                   } else if (state is RegisterValidating) {
                     return _registerUserCard(_formKey, true);
                   } else if (state is RegisterWaitingRestaurant) {
-                    return _registerResCard(_formKey, state, false);
+                    dynamic _initialCameraPosition =
+                        CameraPosition(target: state.latLng, zoom: 15);
+                    return Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Card(
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        elevation: 8.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 89, 206, 144),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10.0),
+                                  topRight: Radius.circular(10.0),
+                                ),
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: Text(
+                                  'Register',
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Column(
+                              children: [
+                                _buildRestaurantCard(_formKey),
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.5,
+                                  child: MapboxMap(
+                                    accessToken:
+                                        "pk.eyJ1IjoiZG9nZ2VyLWUiLCJhIjoiY2x2ZDljMG9uMG42aDJrbGg4aG91M3l4OSJ9.-jl41NBFO9bMJa7H4lisnA",
+                                    initialCameraPosition:
+                                        _initialCameraPosition,
+                                    onMapCreated: _onMapCreated,
+                                    onMapClick: (Point<double> point,
+                                        LatLng coordinates) {
+                                      _addMarkerToSelectedPoint(coordinates);
+                                      state.latLng = coordinates;
+                                    },
+                                    styleString:
+                                        "mapbox://styles/mapbox/light-v11",
+                                    minMaxZoomPreference:
+                                        const MinMaxZoomPreference(14, 30),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  final FormState form = _formKey.currentState!;
+                                  if (form.validate()) {
+                                    String password =
+                                        _passwordController.text.toString();
+                                    String email =
+                                        _emailController.text.toString();
+                                    String passwordValidation =
+                                        _password2Controller.text.toString();
+                                    String username =
+                                        _userController.text.toString();
+                                    String description =
+                                        _descripcionController.text.toString();
+                                    String street =
+                                        _streetController.text.toString();
+                                    context.read<RegisterBloc>().add(
+                                          RegisterRestaurant(
+                                              email: email,
+                                              password: password,
+                                              passwordValidation:
+                                                  passwordValidation,
+                                              restaurantName: username,
+                                              description: description,
+                                              streetName: street,
+                                              coords: state.latLng),
+                                        );
+                                  }
+                                },
+                                style: const ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStatePropertyAll<Color>(
+                                          Color.fromARGB(255, 89, 206, 144)),
+                                ),
+                                child: const Text("Registrarse",
+                                    style: TextStyle(color: Colors.white)),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                context
+                                    .read<RegisterBloc>()
+                                    .add(RegisterChange(type: 0));
+                              },
+                              child: const Text(
+                                'Registrate como usuario',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  decorationColor:
+                                      Color.fromRGBO(89, 206, 143, 1),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
                   } else if (state is RegisterValidatingRestaurant) {
-                    return _registerResCard(_formKey, state, true);
+                    dynamic _initialCameraPosition =
+                        CameraPosition(target: state.latLng, zoom: 15);
+                    return Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Card(
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        elevation: 8.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 89, 206, 144),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10.0),
+                                  topRight: Radius.circular(10.0),
+                                ),
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: Text(
+                                  'Register',
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Column(
+                              children: [
+                                _buildRestaurantCard(_formKey),
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.5,
+                                  child: MapboxMap(
+                                    accessToken:
+                                        "pk.eyJ1IjoiZG9nZ2VyLWUiLCJhIjoiY2x2ZDljMG9uMG42aDJrbGg4aG91M3l4OSJ9.-jl41NBFO9bMJa7H4lisnA",
+                                    initialCameraPosition:
+                                        _initialCameraPosition,
+                                    onMapCreated: _onMapCreated,
+                                    onMapClick: (Point<double> point,
+                                        LatLng coordinates) {
+                                      _addMarkerToSelectedPoint(coordinates);
+                                      state.latLng = coordinates;
+                                    },
+                                    styleString:
+                                        "mapbox://styles/mapbox/light-v11",
+                                    minMaxZoomPreference:
+                                        const MinMaxZoomPreference(14, 30),
+                                  ),
+                                )
+                              ],
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.all(12.0),
+                              child: CircularProgressIndicator(),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                context
+                                    .read<RegisterBloc>()
+                                    .add(RegisterChange(type: 0));
+                              },
+                              child: const Text(
+                                'Registrate como usuario',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  decorationColor:
+                                      Color.fromRGBO(89, 206, 143, 1),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
                   } else if (state is RegisterSuccesful) {
                     context.go("/preferences");
-                    return const Text("");
+                    return SizedBox.shrink();
                   } else {
                     _userController.clear();
                     _emailController.clear();
