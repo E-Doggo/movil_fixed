@@ -21,6 +21,15 @@ class RestaurantData {
     }
   }
 
+  Future<void> deleteFavoriteRestaurant(String idRestaurant) async {
+    FireStore _fireStore = FireStore();
+    try {
+      await _fireStore.deleteResFromFavs(idRestaurant);
+    } catch (e) {
+      throw Exception("Couldnt add restaurant to user favorites");
+    }
+  }
+
   Future<List> getUserFavorites() async {
     FireStore _fireStore = FireStore();
     try {

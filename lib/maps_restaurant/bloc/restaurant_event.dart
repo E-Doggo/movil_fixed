@@ -19,3 +19,11 @@ class RestaurantAddFavorite extends RestaurantEvent {
 
   List<Object> get props => [resID, resInfo];
 }
+
+class RestaurantDeleteFavorite extends RestaurantEvent {
+  final String resID;
+  final Map<String, dynamic> resInfo;
+  RestaurantDeleteFavorite({required this.resID, required this.resInfo});
+
+  List<Object> get props => [resID, resInfo];
+}

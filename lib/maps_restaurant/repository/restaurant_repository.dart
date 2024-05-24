@@ -12,9 +12,17 @@ class RestaurantRepo {
     }
   }
 
-  Future<void> AddResturantFavorite(String idRestaurant) async {
+  Future<void> addResturantFavorite(String idRestaurant) async {
     try {
       await resDataSource.addResToFavs(idRestaurant);
+    } catch (e) {
+      Exception("Couldnt send data to add to favorites");
+    }
+  }
+
+  Future<void> deleteFavoriteRes(String idRestaurant) async {
+    try {
+      await resDataSource.deleteFavoriteRestaurant(idRestaurant);
     } catch (e) {
       Exception("Couldnt send data to add to favorites");
     }

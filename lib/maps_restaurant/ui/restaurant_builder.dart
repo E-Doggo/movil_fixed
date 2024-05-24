@@ -72,7 +72,12 @@ class _RestaurantBuilderState extends State<RestaurantBuilder> {
                   width: MediaQuery.of(context).size.width * 0.375,
                   child: favorite
                       ? ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<RestaurantBloc>().add(
+                                RestaurantAddFavorite(
+                                    resID: resInfo["restaurant_id"],
+                                    resInfo: resInfo));
+                          },
                           child:
                               const Text("Eliminar restaurante de favoritos"),
                         )

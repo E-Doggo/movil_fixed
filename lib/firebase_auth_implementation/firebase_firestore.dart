@@ -167,7 +167,24 @@ class FireStore {
         final DocumentReference documentRef = documentSnapshot.reference;
 
         await documentRef.update({
-          "favorite": FieldValue.arrayUnion([idRestaurant]),
+          "favorites": FieldValue.arrayUnion([idRestaurant]),
+        });
+      } catch (e) {
+        throw Exception("Error: ${e.toString()}");
+      }
+    }
+  }
+
+  Future<void> deleteResFromFavs(String idRestaurant) async {
+    QuerySnapshot querySnapshot = await getCurrentUserDocs();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      try {
+        final DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+        final DocumentReference documentRef = documentSnapshot.reference;
+
+        await documentRef.update({
+          "favorites": FieldValue.arrayRemove([idRestaurant]),
         });
       } catch (e) {
         throw Exception("Error: ${e.toString()}");
