@@ -440,7 +440,9 @@ class _RegisterState extends State<RegisterScreen> {
                       ),
                     );
                   } else if (state is RegisterSuccesful) {
-                    context.go("/preferences");
+                    WidgetsBinding.instance!.addPostFrameCallback((_) {
+                      context.go("/preferences");
+                    });
                     return SizedBox.shrink();
                   } else {
                     _userController.clear();
