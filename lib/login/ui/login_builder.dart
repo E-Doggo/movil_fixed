@@ -13,7 +13,7 @@ class LoginScreenNew extends StatefulWidget {
   State<LoginScreenNew> createState() => _LoginScreenNewState();
 }
 
-Widget LoginOnWait(emailController, passwordController) {
+Widget LoginOnWait(emailController, passwordController, bool validating) {
   return BlocBuilder<LoginBloc, LoginState>(
     builder: (context, state) {
       return Padding(
@@ -80,26 +80,30 @@ Widget LoginOnWait(emailController, passwordController) {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    String username = emailController.text.toString();
-                    String password = passwordController.text.toString();
-                    if (username.isNotEmpty && password.isNotEmpty) {
-                      context
-                          .read<LoginBloc>()
-                          .add(LoginInput(email: username, password: password));
-                    }
-                  },
-                  style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll<Color>(
-                        Color.fromARGB(255, 89, 206, 144)),
-                  ),
-                  child: const Text('Iniciar Sesion',
-                      style: TextStyle(color: Colors.white)),
-                ),
-              ),
+              validating
+                  ? const Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: CircularProgressIndicator(),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          String username = emailController.text.toString();
+                          String password = passwordController.text.toString();
+                          if (username.isNotEmpty && password.isNotEmpty) {
+                            context.read<LoginBloc>().add(LoginInput(
+                                email: username, password: password));
+                          }
+                        },
+                        style: const ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll<Color>(
+                              Color.fromARGB(255, 89, 206, 144)),
+                        ),
+                        child: const Text('Iniciar Sesion',
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                    ),
               TextButton(
                 onPressed: () {},
                 child: const Text(
@@ -176,11 +180,11 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
               BlocBuilder<LoginBloc, LoginState>(
                 builder: (context, state) {
                   if (state is LoginWaiting) {
-                    return Column(
-                      children: [
-                        LoginOnWait(_emailController, _passwordController),
-                      ],
-                    );
+                    return LoginOnWait(
+                        _emailController, _passwordController, false);
+                  } else if (state is LoginValidating) {
+                    return LoginOnWait(
+                        _emailController, _passwordController, true);
                   } else if (state is LoginSuccesfulPrefs) {
                     return AlertDialog(
                       title: const Text("Inicio de Sesion Exitoso"),
