@@ -13,6 +13,14 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
     on<RestaurantFetchedData>((event, emit) async {
       emit(RestaurantLoaded(restaruantInfo: event.resInfo)); // Mock data
     });
+    on<RestaurantAddFavorite>((event, emit) async {
+      try {
+        await resRepo.AddResturantFavorite(event.resID);
+        emit(RestaurantLoaded(restaruantInfo: event.resInfo));
+      } catch (e) {
+        Exception("Couldnt add to favorites due to unknown error");
+      }
+    });
   }
 
   void _init() async {

@@ -12,4 +12,10 @@ class RestaurantFetchedData extends RestaurantEvent {
 
 class RestaurantAddReview extends RestaurantEvent {}
 
-class RestaurantAddFavorite extends RestaurantEvent {}
+class RestaurantAddFavorite extends RestaurantEvent {
+  final String resID;
+  final Map<String, dynamic> resInfo;
+  RestaurantAddFavorite({required this.resID, required this.resInfo});
+
+  List<Object> get props => [resID, resInfo];
+}

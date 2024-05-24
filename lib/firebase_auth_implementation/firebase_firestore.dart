@@ -167,4 +167,19 @@ class FireStore {
       }
     }
   }
+
+  Future<Map<String, dynamic>?> getUserInfo() async {
+    FireBaseAuthService _auth = FireBaseAuthService();
+    CollectionReference collRef = _firestore.collection("users");
+    QuerySnapshot querySnapshot =
+        await collRef.where("email", isEqualTo: _auth.getCurrentUser()).get();
+    if (querySnapshot.docs.isNotEmpty) {
+      try {
+        final DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+        return documentSnapshot.data() as Map<String, dynamic>?;
+      } catch (e) {
+        throw Exception("Error: ${e.toString()}");
+      }
+    }
+  }
 }

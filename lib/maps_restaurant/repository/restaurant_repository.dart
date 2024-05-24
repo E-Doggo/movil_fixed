@@ -8,7 +8,7 @@ class RestaurantRepo {
     try {
       return await resDataSource.getAllRestuarantInfo(id);
     } catch (e) {
-      Exception("Couldnt fethc the restuarant info");
+      Exception("Couldnt fetch the restuarant info");
     }
   }
 
@@ -17,6 +17,18 @@ class RestaurantRepo {
       await resDataSource.addResToFavs(idRestaurant);
     } catch (e) {
       Exception("Couldnt send data to add to favorites");
+    }
+  }
+
+  Future<bool> isResFavorite(String idRestaurant) async {
+    try {
+      final favoritesList = await resDataSource.getUserFavorites();
+      if (favoritesList.contains(idRestaurant)) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      throw Exception("Couldnt fetch the favorite restaurants of user");
     }
   }
 }

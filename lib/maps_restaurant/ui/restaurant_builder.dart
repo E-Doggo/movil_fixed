@@ -15,7 +15,7 @@ class _RestaurantBuilderState extends State<RestaurantBuilder> {
   @override
   Widget build(BuildContext context) {
     //Get the restaurant name, description and logo from the DB
-    Widget restaurantDescription(Map<String, dynamic> resInfo) {
+    Widget restaurantDescription(Map<String, dynamic> resInfo, bool favorite) {
       return Padding(
         padding: const EdgeInsets.all(8.0),
         child:
@@ -58,12 +58,27 @@ class _RestaurantBuilderState extends State<RestaurantBuilder> {
                 ]),
           ),
           Container(
-              padding: const EdgeInsets.all(16.0),
-              child: Image.network(
-                resInfo["logo"],
-                height: 120,
-                fit: BoxFit.contain,
-              ))
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Image.network(
+                  resInfo["logo"],
+                  height: 120,
+                  fit: BoxFit.contain,
+                ),
+                favorite
+                    ? ElevatedButton(
+                        onPressed: () {},
+                        child: const Text("Añadir restaurante a favoritos"),
+                      )
+                    : ElevatedButton(
+                        onPressed: () {},
+                        child: const Text("Eliminar restaurante de favoritos"),
+                      )
+              ],
+            ),
+          )
         ]),
       );
     }
@@ -186,7 +201,7 @@ class _RestaurantBuilderState extends State<RestaurantBuilder> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 32.0, bottom: 32.0),
-                    child: restaurantDescription(state.restaruantInfo),
+                    child: restaurantDescription(state.restaruantInfo, false),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 32.0, bottom: 32.0),
