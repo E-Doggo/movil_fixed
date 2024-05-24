@@ -137,8 +137,9 @@ class FireStore {
   Future<QuerySnapshot> getCurrentUserDocs() async {
     FireBaseAuthService _auth = FireBaseAuthService();
     CollectionReference collRef = _firestore.collection("users");
+    final String? userEmail = await _auth.getCurrentUser();
     QuerySnapshot querySnapshot =
-        await collRef.where("email", isEqualTo: _auth.getCurrentUser()).get();
+        await collRef.where("email", isEqualTo: userEmail).get();
     return querySnapshot;
   }
 
