@@ -120,7 +120,28 @@ class _RestaurantBuilderState extends State<RestaurantBuilder> {
     }
 
     return Scaffold(
-      appBar: const CustomAppBar(title: "Titulo restaurante"),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(56),
+        child: BlocBuilder<RestaurantBloc, RestaurantState>(
+            builder: (context, state) {
+          if (state is RestaurantLoading) {
+            return const CustomAppBar(
+              title: "Cargando",
+            );
+          } else if (state is RestaurantLoaded) {
+            return CustomAppBar(
+              title: state.restaruantInfo["name"],
+            );
+          }
+          if (state is RestaurantLoading) {
+            return const CustomAppBar(
+              title: "Cargado fallido",
+            );
+          } else {
+            return const SizedBox.shrink();
+          }
+        }),
+      ),
       body: BlocBuilder<RestaurantBloc, RestaurantState>(
         builder: (context, state) {
           if (state is RestaurantLoading) {
@@ -161,7 +182,7 @@ class _RestaurantBuilderState extends State<RestaurantBuilder> {
               ),
             );
           } else {
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           }
         },
       ),
