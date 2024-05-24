@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto_progra_movil/app_bar.dart';
 import 'package:proyecto_progra_movil/maps_restaurant/bloc/restaurant_bloc.dart';
+import 'package:proyecto_progra_movil/maps_restaurant/bloc/restaurant_event.dart';
 import 'package:proyecto_progra_movil/maps_restaurant/bloc/restaurant_state.dart';
 
 class RestaurantBuilder extends StatefulWidget {
@@ -60,22 +61,33 @@ class _RestaurantBuilderState extends State<RestaurantBuilder> {
           Container(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.network(
                   resInfo["logo"],
-                  height: 120,
+                  height: MediaQuery.of(context).size.height * 0.175,
                   fit: BoxFit.contain,
                 ),
-                favorite
-                    ? ElevatedButton(
-                        onPressed: () {},
-                        child: const Text("Añadir restaurante a favoritos"),
-                      )
-                    : ElevatedButton(
-                        onPressed: () {},
-                        child: const Text("Eliminar restaurante de favoritos"),
-                      )
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.375,
+                  child: favorite
+                      ? ElevatedButton(
+                          onPressed: () {},
+                          child:
+                              const Text("Eliminar restaurante de favoritos"),
+                        )
+                      : ElevatedButton(
+                          onPressed: () {
+                            context.read<RestaurantBloc>().add(
+                                RestaurantAddFavorite(
+                                    resID: resInfo["restaurant_id"],
+                                    resInfo: resInfo));
+                          },
+                          child: const Text(
+                            "Añadir restaurante a favoritos",
+                          ),
+                        ),
+                ),
               ],
             ),
           )
@@ -201,7 +213,8 @@ class _RestaurantBuilderState extends State<RestaurantBuilder> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 32.0, bottom: 32.0),
-                    child: restaurantDescription(state.restaruantInfo, false),
+                    child: restaurantDescription(
+                        state.restaruantInfo, state.restaurantFavorite),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 32.0, bottom: 32.0),

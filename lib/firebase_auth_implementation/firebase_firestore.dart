@@ -134,6 +134,14 @@ class FireStore {
     return latLst;
   }
 
+  Future<QuerySnapshot> getCurrentUserDocs() async {
+    FireBaseAuthService _auth = FireBaseAuthService();
+    CollectionReference collRef = _firestore.collection("users");
+    QuerySnapshot querySnapshot =
+        await collRef.where("email", isEqualTo: _auth.getCurrentUser()).get();
+    return querySnapshot;
+  }
+
   Future<Map<String, dynamic>?> getRestaurantById(String id) async {
     CollectionReference collRef = _firestore.collection("restaurants");
     QuerySnapshot querySnapshot =
@@ -150,10 +158,8 @@ class FireStore {
   }
 
   Future<void> addResToFavs(String idRestaurant) async {
-    FireBaseAuthService _auth = FireBaseAuthService();
-    CollectionReference collRef = _firestore.collection("users");
-    QuerySnapshot querySnapshot =
-        await collRef.where("email", isEqualTo: _auth.getCurrentUser()).get();
+    QuerySnapshot querySnapshot = await getCurrentUserDocs();
+
     if (querySnapshot.docs.isNotEmpty) {
       try {
         final DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
@@ -169,10 +175,7 @@ class FireStore {
   }
 
   Future<Map<String, dynamic>?> getUserInfo() async {
-    FireBaseAuthService _auth = FireBaseAuthService();
-    CollectionReference collRef = _firestore.collection("users");
-    QuerySnapshot querySnapshot =
-        await collRef.where("email", isEqualTo: _auth.getCurrentUser()).get();
+    QuerySnapshot querySnapshot = await getCurrentUserDocs();
     if (querySnapshot.docs.isNotEmpty) {
       try {
         final DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
