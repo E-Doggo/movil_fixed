@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/preferences/comida.dart';
 
 class FireStore {
@@ -141,6 +143,25 @@ class FireStore {
       try {
         final DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
         return documentSnapshot.data() as Map<String, dynamic>?;
+      } catch (e) {
+        throw Exception("Error: ${e.toString()}");
+      }
+    }
+  }
+
+  Future<void> addResToFavs(String idRestaurant) async {
+    FireBaseAuthService _auth = FireBaseAuthService();
+    CollectionReference collRef = _firestore.collection("users");
+    QuerySnapshot querySnapshot =
+        await collRef.where("email", isEqualTo: _auth.getCurrentUser()).get();
+    if (querySnapshot.docs.isNotEmpty) {
+      try {
+        final DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+        final DocumentReference documentRef = documentSnapshot.reference;
+
+        await documentRef.update({
+          "favorite": FieldValue.arrayUnion([idRestaurant]),
+        });
       } catch (e) {
         throw Exception("Error: ${e.toString()}");
       }

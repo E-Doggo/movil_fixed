@@ -11,4 +11,13 @@ class RestaurantData {
       Exception("Error couldnt fetch $e");
     }
   }
+
+  Future<void> addResToFavs(String idRestaurant) async {
+    FireStore _fireStore = FireStore();
+    try {
+      await _fireStore.addResToFavs(idRestaurant);
+    } catch (e) {
+      Exception("Couldnt add restaurant to user favorites");
+    }
+  }
 }

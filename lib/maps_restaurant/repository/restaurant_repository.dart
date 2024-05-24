@@ -11,4 +11,12 @@ class RestaurantRepo {
       Exception("Couldnt fethc the restuarant info");
     }
   }
+
+  Future<void> AddResturantFavorite(String idRestaurant) async {
+    try {
+      await resDataSource.addResToFavs(idRestaurant);
+    } catch (e) {
+      Exception("Couldnt send data to add to favorites");
+    }
+  }
 }
