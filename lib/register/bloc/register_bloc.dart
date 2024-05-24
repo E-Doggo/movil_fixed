@@ -13,6 +13,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       : super(RegisterWaiting()) {
     on<RegisterSave>((event, emit) async {
       try {
+        emit(RegisterValidating());
         await registerRepo.passwordValidation(event.password,
             event.passwordValidation, event.email, event.username);
         emit(RegisterSuccesful());
@@ -32,6 +33,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
     on<RegisterRestaurant>((event, emit) async {
       try {
+        emit(RegisterValidatingRestaurant());
         await registerRepo.passwordValidation(event.password,
             event.passwordValidation, event.email, event.restaurantName,
             street: event.streetName,
