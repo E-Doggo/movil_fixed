@@ -38,10 +38,30 @@ class FireStore {
   Future<void> uploadRestaurant(String resName, String email, String street,
       String description, Map latlng, String resID) async {
     List<Map<String, String>> menu = [
-      {"dish": "Nombre dish", "photo": "ulr"},
-      {"dish": "Nombre dish", "photo": "ulr"},
-      {"dish": "Nombre dish", "photo": "ulr"},
-      {"dish": "Nombre dish", "photo": "ulr"}
+      {
+        "dish": "Nombre platillo predeterminado",
+        "description": "No es un platillo es un perro con chulo",
+        "photoURL":
+            "https://cc-prod.scene7.com/is/image/CCProdAuthor/What-is-Stock-Photography_P1_mobile",
+      },
+      {
+        "dish": "Nombre platillo predeterminado",
+        "description": "No es un platillo es un perro con chulo",
+        "photoURL":
+            "https://cc-prod.scene7.com/is/image/CCProdAuthor/What-is-Stock-Photography_P1_mobile",
+      },
+      {
+        "dish": "Nombre platillo predeterminado",
+        "description": "No es un platillo es un perro con chulo",
+        "photoURL":
+            "https://cc-prod.scene7.com/is/image/CCProdAuthor/What-is-Stock-Photography_P1_mobile",
+      },
+      {
+        "dish": "Nombre platillo predeterminado",
+        "description": "No es un platillo es un perro con chulo",
+        "photoURL":
+            "https://cc-prod.scene7.com/is/image/CCProdAuthor/What-is-Stock-Photography_P1_mobile",
+      },
     ];
     //probably will have to change to float at some point
     CollectionReference collRef = _firestore.collection("restaurants");

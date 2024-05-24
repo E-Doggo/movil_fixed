@@ -14,6 +14,7 @@ class RestaurantBuilder extends StatefulWidget {
 class _RestaurantBuilderState extends State<RestaurantBuilder> {
   @override
   Widget build(BuildContext context) {
+    //Get the restaurant name, description and logo from the DB
     Widget restaurantDescription(Map<String, dynamic> resInfo) {
       return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         Column(
@@ -53,6 +54,7 @@ class _RestaurantBuilderState extends State<RestaurantBuilder> {
       ]);
     }
 
+    //Get the menu from the DB
     Widget menu(Map<String, dynamic> resInfo) {
       return Column(
         children: [
@@ -119,8 +121,8 @@ class _RestaurantBuilderState extends State<RestaurantBuilder> {
       );
     }
 
-    return Scaffold(
-      appBar: PreferredSize(
+    PreferredSize restaurantAppBar() {
+      return PreferredSize(
         preferredSize: const Size.fromHeight(56),
         child: BlocBuilder<RestaurantBloc, RestaurantState>(
             builder: (context, state) {
@@ -141,7 +143,11 @@ class _RestaurantBuilderState extends State<RestaurantBuilder> {
             return const SizedBox.shrink();
           }
         }),
-      ),
+      );
+    }
+
+    return Scaffold(
+      appBar: restaurantAppBar(),
       body: BlocBuilder<RestaurantBloc, RestaurantState>(
         builder: (context, state) {
           if (state is RestaurantLoading) {
