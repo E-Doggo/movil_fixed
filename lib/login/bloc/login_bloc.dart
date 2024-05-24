@@ -10,6 +10,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({required this.loginRepo}) : super(LoginWaiting()) {
     on<LoginInput>((event, emit) async {
       try {
+        emit(LoginValidating());
         final validation =
             await loginRepo.authenticateData(event.email, event.password);
         if (validation == true) {
