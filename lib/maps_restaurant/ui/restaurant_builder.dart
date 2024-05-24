@@ -16,42 +16,56 @@ class _RestaurantBuilderState extends State<RestaurantBuilder> {
   Widget build(BuildContext context) {
     //Get the restaurant name, description and logo from the DB
     Widget restaurantDescription(Map<String, dynamic> resInfo) {
-      return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Padding(
-                padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
-                child: Text(
-                  "Descripción",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ), //Necesita negrilla
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(resInfo["description"]),
-              ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
-                child: Text(
-                  "Direccion",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ), //Necesita negrilla
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(resInfo["street"]),
-              )
-            ]),
-        Container(
-            padding: const EdgeInsets.all(16.0),
-            child: Image.network(
-              resInfo["logo"],
-              height: 120,
-              fit: BoxFit.contain,
-            ))
-      ]);
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Container(
+            width: MediaQuery.of(context).size.width * 0.5,
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
+                    child: Text(
+                      "Descripción",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ), //Necesita negrilla
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      resInfo["description"],
+                      softWrap: true,
+                      textAlign: TextAlign.justify,
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
+                    child: Text(
+                      "Direccion",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ), //Necesita negrilla
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(resInfo["street"],
+                        softWrap: true, textAlign: TextAlign.justify),
+                  )
+                ]),
+          ),
+          Container(
+              padding: const EdgeInsets.all(16.0),
+              child: Image.network(
+                resInfo["logo"],
+                height: 120,
+                fit: BoxFit.contain,
+              ))
+        ]),
+      );
     }
 
     //Get the menu from the DB
@@ -166,17 +180,20 @@ class _RestaurantBuilderState extends State<RestaurantBuilder> {
               ),
             );
           } else if (state is RestaurantLoaded) {
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 32.0, bottom: 32.0),
-                  child: restaurantDescription(state.restaruantInfo),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 32.0, bottom: 32.0),
-                  child: menu(state.restaruantInfo),
-                )
-              ],
+            return SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 32.0, bottom: 32.0),
+                    child: restaurantDescription(state.restaruantInfo),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 32.0, bottom: 32.0),
+                    child: menu(state.restaruantInfo),
+                  )
+                ],
+              ),
             );
           } else if (state is RestaurantLoadingFailed) {
             return const Center(
