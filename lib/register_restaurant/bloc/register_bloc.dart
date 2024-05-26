@@ -24,6 +24,7 @@ class RegisterResBloc extends Bloc<RegisterEvent, RegisterState> {
 
     on<RegisterRestaurant>((event, emit) async {
       try {
+        emit(RegisterValidating(latLng: event.coords));
         await registerRepo.passwordValidation(
             event.password,
             event.passwordValidation,

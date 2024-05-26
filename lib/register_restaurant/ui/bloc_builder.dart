@@ -97,7 +97,7 @@ class _RegisterState extends State<RegisterResScreen> {
     );
   }
 
-  Widget _registerRestaurantCard(state) {
+  Widget _registerRestaurantCard(state, validating) {
     dynamic initialCameraPosition =
         CameraPosition(target: state.latLng, zoom: 15);
     return Padding(
@@ -153,39 +153,43 @@ class _RegisterState extends State<RegisterResScreen> {
                 )
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  final FormState form = formKey.currentState!;
-                  if (form.validate()) {
-                    String password = _passwordController.text.toString();
-                    String email = _emailController.text.toString();
-                    String passwordValidation =
-                        _password2Controller.text.toString();
-                    String restaurantName = _userController.text.toString();
-                    String description = _descripcionController.text.toString();
-                    String streetName = _streetController.text.toString();
-                    context.read<RegisterResBloc>().add(
-                          RegisterRestaurant(
-                              email: email,
-                              password: password,
-                              passwordValidation: passwordValidation,
-                              restaurantName: restaurantName,
-                              description: description,
-                              streetName: streetName,
-                              coords: state.latLng),
-                        );
-                  }
-                },
-                style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll<Color>(
-                      Color.fromARGB(255, 89, 206, 144)),
-                ),
-                child: const Text("Registrarse",
-                    style: TextStyle(color: Colors.white)),
-              ),
-            ),
+            validating
+                ? const CircularProgressIndicator()
+                : Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        final FormState form = formKey.currentState!;
+                        if (form.validate()) {
+                          String password = _passwordController.text.toString();
+                          String email = _emailController.text.toString();
+                          String passwordValidation =
+                              _password2Controller.text.toString();
+                          String restaurantName =
+                              _userController.text.toString();
+                          String description =
+                              _descripcionController.text.toString();
+                          String streetName = _streetController.text.toString();
+                          context.read<RegisterResBloc>().add(
+                                RegisterRestaurant(
+                                    email: email,
+                                    password: password,
+                                    passwordValidation: passwordValidation,
+                                    restaurantName: restaurantName,
+                                    description: description,
+                                    streetName: streetName,
+                                    coords: state.latLng),
+                              );
+                        }
+                      },
+                      style: const ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll<Color>(
+                            Color.fromARGB(255, 89, 206, 144)),
+                      ),
+                      child: const Text("Registrarse",
+                          style: TextStyle(color: Colors.white)),
+                    ),
+                  ),
             TextButton(
               onPressed: () {
                 context.pop();
@@ -223,12 +227,12 @@ class _RegisterState extends State<RegisterResScreen> {
                   if (state is RegisterLoading) {
                     return const CircularProgressIndicator();
                   } else if (state is RegisterLoaded) {
-                    return _registerRestaurantCard(state);
+                    return _registerRestaurantCard(state, false);
                   } else if (state is RegisterValidating) {
-                    return _registerRestaurantCard(state);
+                    return _registerRestaurantCard(state, true);
                   } else if (state is RegisterSuccesful) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
-                      context.go("/");
+                      context.go("/mainPage");
                     });
                     return SizedBox.shrink();
                   } else {
@@ -238,7 +242,7 @@ class _RegisterState extends State<RegisterResScreen> {
                     _password2Controller.clear();
                     _streetController.clear();
                     _descripcionController.clear();
-                    return _registerRestaurantCard(state);
+                    return _registerRestaurantCard(state, false);
                   }
                 }),
               ],
