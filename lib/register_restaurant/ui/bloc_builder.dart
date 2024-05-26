@@ -27,6 +27,8 @@ class _RegisterState extends State<RegisterResScreen> {
   final TextEditingController _password2Controller = TextEditingController();
   final TextEditingController _streetController = TextEditingController();
   final TextEditingController _descripcionController = TextEditingController();
+  TimeOfDay openingTime = TimeOfDay.now();
+  TimeOfDay closingTime = TimeOfDay.now();
   late MapboxMapController mapController;
   final formKey = GlobalKey<FormState>();
 
@@ -99,23 +101,41 @@ class _RegisterState extends State<RegisterResScreen> {
     );
   }
 
-  Widget alertTimePicker() {
-    return Column(
+  Widget _alertTimePicker(bool type) {
+    //true apertura false cierre
+
+    return ElevatedButton(
+      onPressed: () async {
+        final selectedTime = await showTimePicker(
+          context: context,
+          initialTime: TimeOfDay.now(),
+          confirmText: "Seleccionar",
+          cancelText: "Cancelar",
+        );
+
+        if (selectedTime != null) {
+          setState(() {
+            type ? openingTime = selectedTime : closingTime = selectedTime;
+          });
+        }
+      },
+      child: type
+          ? const Text('Seleccionar hora de apertura')
+          : const Text('Seleccionar hora de cierre'),
+    );
+  }
+
+  Widget _formFieldTime(bool type) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        TimePickerDialog(initialTime: TimeOfDay.fromDateTime(DateTime.now())),
-        TextButton(
-          child: const Text('Cancelar'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        TextButton(
-          child: const Text('Seleccionar'),
-          onPressed: () {
-            // Perform an action
-            Navigator.of(context).pop();
-          },
-        ),
+        const Text("Hora seleccionada"),
+        type
+            ? Text(
+                "${openingTime.hour.toString()} : ${openingTime.minute.toString()} ")
+            : Text(
+                "${closingTime.hour.toString()} : ${closingTime.minute.toString()} "),
+        _alertTimePicker(type)
       ],
     );
   }
@@ -158,19 +178,8 @@ class _RegisterState extends State<RegisterResScreen> {
             Column(
               children: [
                 _buildRestaurantCard(formKey),
-                ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return alertTimePicker();
-                        },
-                      );
-                    },
-                    child: Text("Seleccionar hora de apertura")),
-                ElevatedButton(
-                    onPressed: () {},
-                    child: Text("Seleccionar hora de cierre")),
+                _formFieldTime(true),
+                _formFieldTime(false),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.5,
