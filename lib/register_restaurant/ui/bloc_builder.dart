@@ -1,6 +1,8 @@
+import 'dart:ffi';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
@@ -97,6 +99,27 @@ class _RegisterState extends State<RegisterResScreen> {
     );
   }
 
+  Widget alertTimePicker() {
+    return Column(
+      children: [
+        TimePickerDialog(initialTime: TimeOfDay.fromDateTime(DateTime.now())),
+        TextButton(
+          child: const Text('Cancelar'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        TextButton(
+          child: const Text('Seleccionar'),
+          onPressed: () {
+            // Perform an action
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+  }
+
   Widget _registerRestaurantCard(state, validating) {
     dynamic initialCameraPosition =
         CameraPosition(target: state.latLng, zoom: 15);
@@ -135,6 +158,19 @@ class _RegisterState extends State<RegisterResScreen> {
             Column(
               children: [
                 _buildRestaurantCard(formKey),
+                ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return alertTimePicker();
+                        },
+                      );
+                    },
+                    child: Text("Seleccionar hora de apertura")),
+                ElevatedButton(
+                    onPressed: () {},
+                    child: Text("Seleccionar hora de cierre")),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.5,
@@ -221,7 +257,6 @@ class _RegisterState extends State<RegisterResScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //_buildHeaderText(),
                 BlocBuilder<RegisterResBloc, RegisterState>(
                     builder: (context, state) {
                   if (state is RegisterLoading) {
@@ -268,85 +303,3 @@ class _RegisterState extends State<RegisterResScreen> {
     );
   }
 }
-
-
-
-//  dynamic _initialCameraPosition =
-                    //     CameraPosition(target: state.latLng, zoom: 15);
-                    // return Padding(
-                    //   padding: const EdgeInsets.all(20.0),
-                    //   child: Card(
-                    //     color: const Color.fromARGB(255, 255, 255, 255),
-                    //     elevation: 8.0,
-                    //     shape: RoundedRectangleBorder(
-                    //       borderRadius: BorderRadius.circular(10.0),
-                    //     ),
-                    //     child: Column(
-                    //       mainAxisSize: MainAxisSize.min,
-                    //       children: [
-                    //         Container(
-                    //           width: double.infinity,
-                    //           alignment: Alignment.center,
-                    //           decoration: const BoxDecoration(
-                    //             color: Color.fromARGB(255, 89, 206, 144),
-                    //             borderRadius: BorderRadius.only(
-                    //               topLeft: Radius.circular(10.0),
-                    //               topRight: Radius.circular(10.0),
-                    //             ),
-                    //           ),
-                    //           child: const Padding(
-                    //             padding: EdgeInsets.all(16.0),
-                    //             child: Text(
-                    //               'Register',
-                    //               style: TextStyle(
-                    //                 fontSize: 18.0,
-                    //                 color: Colors.white,
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         Column(
-                    //           children: [
-                    //             _buildRestaurantCard(_formKey),
-                    //             SizedBox(
-                    //               width: MediaQuery.of(context).size.width,
-                    //               height:
-                    //                   MediaQuery.of(context).size.height * 0.5,
-                    //               child: MapboxMap(
-                    //                 accessToken:
-                    //                     "pk.eyJ1IjoiZG9nZ2VyLWUiLCJhIjoiY2x2ZDljMG9uMG42aDJrbGg4aG91M3l4OSJ9.-jl41NBFO9bMJa7H4lisnA",
-                    //                 initialCameraPosition:
-                    //                     _initialCameraPosition,
-                    //                 onMapCreated: _onMapCreated,
-                    //                 onMapClick: (Point<double> point,
-                    //                     LatLng coordinates) {
-                    //                   _addMarkerToSelectedPoint(coordinates);
-                    //                   state.latLng = coordinates;
-                    //                 },
-                    //                 styleString:
-                    //                     "mapbox://styles/mapbox/light-v11",
-                    //                 minMaxZoomPreference:
-                    //                     const MinMaxZoomPreference(14, 30),
-                    //               ),
-                    //             )
-                    //           ],
-                    //         ),
-                    //         const Padding(
-                    //           padding: EdgeInsets.all(12.0),
-                    //           child: CircularProgressIndicator(),
-                    //         ),
-                    //         TextButton(
-                    //           onPressed: () {},
-                    //           child: const Text(
-                    //             'Registrate como usuario',
-                    //             style: TextStyle(
-                    //               decoration: TextDecoration.underline,
-                    //               decorationColor:
-                    //                   Color.fromRGBO(89, 206, 143, 1),
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // );
