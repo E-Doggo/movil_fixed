@@ -9,6 +9,7 @@ import 'package:proyecto_progra_movil/maps_restaurant/ui/restaurant_provider.dar
 import 'package:proyecto_progra_movil/maps_screen/ui/maps_provider.dart';
 import 'package:proyecto_progra_movil/preferences/preferences_screen.dart';
 import 'package:proyecto_progra_movil/register/ui/bloc_provider.dart';
+import 'package:proyecto_progra_movil/register_restaurant/ui/bloc_provider.dart';
 import 'firebase_options.dart';
 
 //custom MENU icon
@@ -35,18 +36,29 @@ final GoRouter _router = GoRouter(
       },
       routes: <RouteBase>[
         GoRoute(
-          path: 'register',
-          builder: (BuildContext context, GoRouterState state) {
-            return const RegisterProvider();
-          },
-        ),
+            name: 'register',
+            path: 'register',
+            builder: (BuildContext context, GoRouterState state) {
+              return const RegisterProvider();
+            },
+            routes: <RouteBase>[
+              GoRoute(
+                name: 'register-restaurant',
+                path: 'restaurant',
+                builder: (context, state) {
+                  return const RegisterResProvider();
+                },
+              )
+            ]),
         GoRoute(
+          name: 'login',
           path: 'login',
           builder: (BuildContext context, GoRouterState state) {
             return const LoginProvider();
           },
         ),
         GoRoute(
+          name: 'preferences',
           path: 'preferences',
           builder: (BuildContext context, GoRouterState state) {
             return const PreferencesPage();
@@ -62,9 +74,9 @@ final GoRouter _router = GoRouter(
                 name: "restaurant-info",
                 path: 'restaurant-info',
                 builder: (BuildContext context, GoRouterState state) {
-                  dynamic resturant_id = state.extra;
+                  dynamic restaurantId = state.extra;
                   return RestaurantProvider(
-                    parameter: resturant_id,
+                    parameter: restaurantId,
                   );
                 },
               ),

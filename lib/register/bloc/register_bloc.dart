@@ -21,29 +21,5 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         emit(RegisterFailure());
       }
     });
-    on<RegisterChange>((event, emit) async {
-      if (event.type == 0) {
-        emit(RegisterWaiting());
-      } else {
-        await mapRepo.initializeLocationAndSave();
-        LatLng latlng = await mapRepo.getLatLngFromSharedPrefs();
-        emit(RegisterWaitingRestaurant(latLng: latlng));
-      }
-    });
-
-    on<RegisterRestaurant>((event, emit) async {
-      try {
-        LatLng latlng = await mapRepo.getLatLngFromSharedPrefs();
-        emit(RegisterValidatingRestaurant(latLng: latlng));
-        await registerRepo.passwordValidation(event.password,
-            event.passwordValidation, event.email, event.restaurantName,
-            street: event.streetName,
-            description: event.description,
-            coords: event.coords);
-        emit(RegisterSuccesful());
-      } catch (e) {
-        emit(RegisterFailure());
-      }
-    });
   }
 }
