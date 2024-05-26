@@ -43,7 +43,7 @@ final GoRouter _router = GoRouter(
             },
             routes: <RouteBase>[
               GoRoute(
-                name: 'register-resturant',
+                name: 'register-restaurant',
                 path: 'restaurant',
                 builder: (context, state) {
                   return const RegisterResProvider();

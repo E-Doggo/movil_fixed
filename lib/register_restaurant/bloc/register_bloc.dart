@@ -11,6 +11,7 @@ class RegisterResBloc extends Bloc<RegisterEvent, RegisterState> {
 
   RegisterResBloc({required this.registerRepo, required this.mapRepo})
       : super(RegisterLoading()) {
+    _init();
     on<RegisterMapLoaded>((event, emit) {
       emit(RegisterLoaded(latLng: event.latLng));
     });

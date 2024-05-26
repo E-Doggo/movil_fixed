@@ -1,24 +1,19 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:proyecto_progra_movil/app_bar.dart';
-import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/register/bloc/register_bloc.dart';
 import 'package:proyecto_progra_movil/register/bloc/register_event.dart';
 import 'package:proyecto_progra_movil/register/bloc/register_state.dart';
-import 'package:proyecto_progra_movil/app_bar.dart';
 
-class RegisterResScreen extends StatefulWidget {
-  const RegisterResScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<RegisterResScreen> createState() => _RegisterState();
+  State<RegisterScreen> createState() => _RegisterState();
 }
 
-class _RegisterState extends State<RegisterResScreen> {
+class _RegisterState extends State<RegisterScreen> {
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -31,23 +26,6 @@ class _RegisterState extends State<RegisterResScreen> {
       image: DecorationImage(
         image: AssetImage('assets/images/silpancho-background-homepage.jpg'),
         fit: BoxFit.cover,
-      ),
-    );
-  }
-
-  Widget _buildHeaderText() {
-    return Container(
-      color: const Color.fromARGB(255, 89, 206, 144), // Fondo verde
-      padding: const EdgeInsets.symmetric(vertical: 1.0), // Ajustar espaciado
-      alignment: Alignment.center,
-      child: const Text(
-        'RUTA GOURMET',
-        style: TextStyle(
-          fontSize: 36.0,
-          fontStyle: FontStyle.italic,
-          color: Colors.white,
-          decoration: TextDecoration.none,
-        ),
       ),
     );
   }
@@ -109,24 +87,7 @@ class _RegisterState extends State<RegisterResScreen> {
     );
   }
 
-  Card _buildRestaurantCard(formKey) {
-    return Card(
-      child: Form(
-        key: formKey,
-        child: Column(children: <TextFormField>[
-          mailValidation("Correo *"),
-          textValidation("Nombre del restaurante *", _userController),
-          passwordValidation("Contraseña *", 0),
-          passwordValidation("Repita la contraseña *", 1),
-          textValidation("Calle del restaurante *", _streetController),
-          textValidation(
-              "Descripcion del restaurante *", _descripcionController),
-        ]),
-      ),
-    );
-  }
-
-  Widget _registerUserCard(_formKey, bool validating) {
+  Widget _registerUserCard(formKey, bool validating) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Card(
@@ -159,7 +120,7 @@ class _RegisterState extends State<RegisterResScreen> {
                 ),
               ),
             ),
-            _buildCardForms(_formKey),
+            _buildCardForms(formKey),
             validating
                 ? const Padding(
                     padding: EdgeInsets.all(12.0),
@@ -169,7 +130,7 @@ class _RegisterState extends State<RegisterResScreen> {
                     padding: const EdgeInsets.all(12.0),
                     child: ElevatedButton(
                       onPressed: () {
-                        final FormState form = _formKey.currentState!;
+                        final FormState form = formKey.currentState!;
                         if (form.validate()) {
                           String password = _passwordController.text.toString();
                           String email = _emailController.text.toString();
@@ -195,7 +156,7 @@ class _RegisterState extends State<RegisterResScreen> {
               padding: const EdgeInsets.only(bottom: 15.0),
               child: TextButton(
                 onPressed: () {
-                  context.go("/");
+                  context.goNamed("register-restaurant");
                 },
                 child: const Text(
                   'Registrate como restaurante',
@@ -214,7 +175,7 @@ class _RegisterState extends State<RegisterResScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     return Scaffold(
         appBar: const CustomAppBar(title: 'RUTA GOURMET'),
         body: Container(
@@ -230,14 +191,14 @@ class _RegisterState extends State<RegisterResScreen> {
                 BlocBuilder<RegisterBloc, RegisterState>(
                     builder: (context, state) {
                   if (state is RegisterWaiting) {
-                    return _registerUserCard(_formKey, false);
+                    return _registerUserCard(formKey, false);
                   } else if (state is RegisterValidating) {
-                    return _registerUserCard(_formKey, true);
+                    return _registerUserCard(formKey, true);
                   } else if (state is RegisterSuccesful) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       context.go("/preferences");
                     });
-                    return SizedBox.shrink();
+                    return const SizedBox.shrink();
                   } else {
                     _userController.clear();
                     _emailController.clear();
@@ -245,7 +206,7 @@ class _RegisterState extends State<RegisterResScreen> {
                     _password2Controller.clear();
                     _streetController.clear();
                     _descripcionController.clear();
-                    return _registerUserCard(_formKey, false);
+                    return _registerUserCard(formKey, false);
                   }
                 }),
               ],

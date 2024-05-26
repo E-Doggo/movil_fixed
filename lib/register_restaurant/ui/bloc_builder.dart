@@ -10,14 +10,14 @@ import 'package:proyecto_progra_movil/register_restaurant/bloc/register_bloc.dar
 import 'package:proyecto_progra_movil/register_restaurant/bloc/register_event.dart';
 import 'package:proyecto_progra_movil/register_restaurant/bloc/register_state.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class RegisterResScreen extends StatefulWidget {
+  const RegisterResScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterState();
+  State<RegisterResScreen> createState() => _RegisterState();
 }
 
-class _RegisterState extends State<RegisterScreen> {
+class _RegisterState extends State<RegisterResScreen> {
   final FireBaseAuthService auth = FireBaseAuthService();
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -26,29 +26,13 @@ class _RegisterState extends State<RegisterScreen> {
   final TextEditingController _streetController = TextEditingController();
   final TextEditingController _descripcionController = TextEditingController();
   late MapboxMapController mapController;
+  final formKey = GlobalKey<FormState>();
 
   BoxDecoration _buildBackgroundDecoration() {
     return const BoxDecoration(
       image: DecorationImage(
         image: AssetImage('assets/images/silpancho-background-homepage.jpg'),
         fit: BoxFit.cover,
-      ),
-    );
-  }
-
-  Widget _buildHeaderText() {
-    return Container(
-      color: const Color.fromARGB(255, 89, 206, 144), // Fondo verde
-      padding: const EdgeInsets.symmetric(vertical: 1.0), // Ajustar espaciado
-      alignment: Alignment.center,
-      child: const Text(
-        'RUTA GOURMET',
-        style: TextStyle(
-          fontSize: 36.0,
-          fontStyle: FontStyle.italic,
-          color: Colors.white,
-          decoration: TextDecoration.none,
-        ),
       ),
     );
   }
@@ -96,20 +80,6 @@ class _RegisterState extends State<RegisterScreen> {
     );
   }
 
-  Card _buildCardForms(formKey) {
-    return Card(
-      child: Form(
-        key: formKey,
-        child: Column(children: <TextFormField>[
-          mailValidation("Correo *"),
-          textValidation("Nombre de Usuario *", _userController),
-          passwordValidation("Contraseña *", 0),
-          passwordValidation("Repita la contraseña *", 1),
-        ]),
-      ),
-    );
-  }
-
   Card _buildRestaurantCard(formKey) {
     return Card(
       child: Form(
@@ -127,7 +97,7 @@ class _RegisterState extends State<RegisterScreen> {
     );
   }
 
-  Widget _registerRestaurantCard(state, formKey) {
+  Widget _registerRestaurantCard(state) {
     dynamic initialCameraPosition =
         CameraPosition(target: state.latLng, zoom: 15);
     return Padding(
@@ -236,7 +206,6 @@ class _RegisterState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
     return Scaffold(
         appBar: const CustomAppBar(title: 'RUTA GOURMET'),
         body: Container(
@@ -252,11 +221,11 @@ class _RegisterState extends State<RegisterScreen> {
                 BlocBuilder<RegisterResBloc, RegisterState>(
                     builder: (context, state) {
                   if (state is RegisterLoading) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else if (state is RegisterLoaded) {
-                    return _registerRestaurantCard(state, _formKey);
+                    return _registerRestaurantCard(state);
                   } else if (state is RegisterValidating) {
-                    return _registerRestaurantCard(state, _formKey);
+                    return _registerRestaurantCard(state);
                   } else if (state is RegisterSuccesful) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       context.go("/");
@@ -269,7 +238,7 @@ class _RegisterState extends State<RegisterScreen> {
                     _password2Controller.clear();
                     _streetController.clear();
                     _descripcionController.clear();
-                    return _registerRestaurantCard(state, _formKey);
+                    return _registerRestaurantCard(state);
                   }
                 }),
               ],
