@@ -41,12 +41,14 @@ final GoRouter _router = GoRouter(
           },
         ),
         GoRoute(
+          name: 'login',
           path: 'login',
           builder: (BuildContext context, GoRouterState state) {
             return const LoginProvider();
           },
         ),
         GoRoute(
+          name: 'preferences',
           path: 'preferences',
           builder: (BuildContext context, GoRouterState state) {
             return const PreferencesPage();
