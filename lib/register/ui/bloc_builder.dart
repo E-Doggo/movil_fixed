@@ -11,14 +11,14 @@ import 'package:proyecto_progra_movil/register/bloc/register_event.dart';
 import 'package:proyecto_progra_movil/register/bloc/register_state.dart';
 import 'package:proyecto_progra_movil/app_bar.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class RegisterResScreen extends StatefulWidget {
+  const RegisterResScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterState();
+  State<RegisterResScreen> createState() => _RegisterState();
 }
 
-class _RegisterState extends State<RegisterScreen> {
+class _RegisterState extends State<RegisterResScreen> {
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();

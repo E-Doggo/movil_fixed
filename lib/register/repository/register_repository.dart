@@ -11,14 +11,11 @@ class RegisterRepo {
     String pass,
     String passValidation,
     String email,
-    String username, {
-    String street = "",
-    String description = "",
-    LatLng coords = const LatLng(0.0, 0.0),
-  }) async {
+    String username,
+  ) async {
     if (pass == passValidation) {
       await dataSource.createUserAuth(email, pass);
-      await dataSource.saveUserDB(username, email, street, description, coords);
+      await dataSource.saveUserDB(username, email);
     }
   }
 }

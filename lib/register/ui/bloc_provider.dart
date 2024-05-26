@@ -16,7 +16,7 @@ class RegisterProvider extends StatelessWidget {
       create: (_) => RegisterBloc(
           registerRepo: RegisterRepo(dataSource: RegDataSource()),
           mapRepo: MapRepo(mapDataSource: MapDataSource())),
-      child: const RegisterScreen(),
+      child: const RegisterResScreen(),
     );
   }
 }

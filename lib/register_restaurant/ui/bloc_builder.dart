@@ -196,7 +196,7 @@ class _RegisterState extends State<RegisterScreen> {
                     String restaurantName = _userController.text.toString();
                     String description = _descripcionController.text.toString();
                     String streetName = _streetController.text.toString();
-                    context.read<RegisterBloc>().add(
+                    context.read<RegisterResBloc>().add(
                           RegisterRestaurant(
                               email: email,
                               password: password,
@@ -218,7 +218,7 @@ class _RegisterState extends State<RegisterScreen> {
             ),
             TextButton(
               onPressed: () {
-                context.goNamed("register");
+                context.pop();
               },
               child: const Text(
                 'Registrate como usuario',
@@ -249,7 +249,7 @@ class _RegisterState extends State<RegisterScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 //_buildHeaderText(),
-                BlocBuilder<RegisterBloc, RegisterState>(
+                BlocBuilder<RegisterResBloc, RegisterState>(
                     builder: (context, state) {
                   if (state is RegisterLoading) {
                     return CircularProgressIndicator();

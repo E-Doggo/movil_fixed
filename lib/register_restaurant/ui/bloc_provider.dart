@@ -7,8 +7,8 @@ import 'package:proyecto_progra_movil/register/bloc/register_bloc.dart';
 import 'package:proyecto_progra_movil/register/data_source/register_data_source.dart';
 import 'package:proyecto_progra_movil/register/repository/register_repository.dart';
 
-class RegisterProvider extends StatelessWidget {
-  const RegisterProvider({super.key});
+class RegisterResProvider extends StatelessWidget {
+  const RegisterResProvider({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class RegisterProvider extends StatelessWidget {
       create: (_) => RegisterBloc(
           registerRepo: RegisterRepo(dataSource: RegDataSource()),
           mapRepo: MapRepo(mapDataSource: MapDataSource())),
-      child: const RegisterScreen(),
+      child: const RegisterResScreen(),
     );
   }
 }
