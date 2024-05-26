@@ -223,7 +223,9 @@ class _RegisterState extends State<RegisterResScreen> {
                                     restaurantName: restaurantName,
                                     description: description,
                                     streetName: streetName,
-                                    coords: state.latLng),
+                                    coords: state.latLng,
+                                    openingTime: openingTime,
+                                    closingTime: closingTime),
                               );
                         }
                       },

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:proyecto_progra_movil/maps_screen/repository/maps_repository.dart';
@@ -25,6 +26,10 @@ class RegisterResBloc extends Bloc<RegisterEvent, RegisterState> {
     on<RegisterRestaurant>((event, emit) async {
       try {
         emit(RegisterValidating(latLng: event.coords));
+        Timestamp openTime =
+            registerRepo.convertTimeOfDayToTimestamp(event.openingTime);
+        Timestamp closeTime =
+            registerRepo.convertTimeOfDayToTimestamp(event.closingTime);
         await registerRepo.passwordValidation(
             event.password,
             event.passwordValidation,
@@ -32,7 +37,9 @@ class RegisterResBloc extends Bloc<RegisterEvent, RegisterState> {
             event.restaurantName,
             event.streetName,
             event.description,
-            event.coords);
+            event.coords,
+            openTime,
+            closeTime);
         emit(RegisterSuccesful());
       } catch (e) {
         emit(RegisterFailure(latLng: event.coords));

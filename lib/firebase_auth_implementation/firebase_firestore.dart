@@ -37,8 +37,16 @@ class FireStore {
     }
   }
 
-  Future<void> uploadRestaurant(String resName, String email, String street,
-      String description, Map latlng, String resID) async {
+  Future<void> uploadRestaurant(
+    String resName,
+    String email,
+    String street,
+    String description,
+    Map latlng,
+    String resID,
+    Timestamp openTime,
+    Timestamp closingTime,
+  ) async {
     List<Map<String, String>> menu = [
       {
         "dish": "Nombre platillo predeterminado",
@@ -76,6 +84,8 @@ class FireStore {
       "restaurant_id": resID,
       "street": street,
       "menu": menu,
+      "openingTime": openTime,
+      "closinTime": closingTime
     });
   }
 
