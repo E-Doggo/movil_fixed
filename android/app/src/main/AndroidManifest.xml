@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="fix_movil"
+        android:label="Ruta Gourmet"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
