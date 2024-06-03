@@ -27,6 +27,7 @@ class _RegisterState extends State<RegisterScreen> {
   final TextEditingController _streetController = TextEditingController();
   final TextEditingController _descripcionController = TextEditingController();
   late MapboxMapController mapController;
+  bool _acceptedTerms = false;
 
   BoxDecoration _buildBackgroundDecoration() {
     return const BoxDecoration(
@@ -101,11 +102,33 @@ class _RegisterState extends State<RegisterScreen> {
     return Card(
       child: Form(
         key: formKey,
-        child: Column(children: <TextFormField>[
+        child: Column(children: <Widget>[
           mailValidation("Correo *"),
           textValidation("Nombre de Usuario *", _userController),
           passwordValidation("Contraseña *", 0),
           passwordValidation("Repita la contraseña *", 1),
+          CheckboxListTile(
+            title: const Text('Acepto los términos y condiciones'),
+            value: _acceptedTerms,
+            onChanged: (bool? value) {
+              setState(() {
+                _acceptedTerms = value!;
+              });
+            },
+            controlAffinity: ListTileControlAffinity.leading,
+          ),
+          InkWell(
+            onTap:(){
+
+            },
+            child: const Text(
+              'Leer términos y condiciones',
+              style: TextStyle(
+                color:  Colors.blue,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
         ]),
       ),
     );
@@ -115,7 +138,7 @@ class _RegisterState extends State<RegisterScreen> {
     return Card(
       child: Form(
         key: formKey,
-        child: Column(children: <TextFormField>[
+        child: Column(children: <Widget>[
           mailValidation("Correo *"),
           textValidation("Nombre del restaurante *", _userController),
           passwordValidation("Contraseña *", 0),
@@ -123,6 +146,28 @@ class _RegisterState extends State<RegisterScreen> {
           textValidation("Calle del restaurante *", _streetController),
           textValidation(
               "Descripcion del restaurante *", _descripcionController),
+          CheckboxListTile(
+            title: const Text('Acepto los términos y condiciones'),
+            value: _acceptedTerms,
+            onChanged: (bool? value) {
+              setState(() {
+                _acceptedTerms = value!;
+              });
+            },
+            controlAffinity: ListTileControlAffinity.leading,
+          ),
+          InkWell(
+            onTap:(){
+
+            },
+            child: const Text(
+              'Leer términos y condiciones',
+              style: TextStyle(
+                color:  Colors.blue,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
         ]),
       ),
     );
@@ -170,7 +215,7 @@ class _RegisterState extends State<RegisterScreen> {
                 : Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: _acceptedTerms ? () {
                         final FormState form = _formKey.currentState!;
                         if (form.validate()) {
                           String password = _passwordController.text.toString();
@@ -184,7 +229,7 @@ class _RegisterState extends State<RegisterScreen> {
                               passwordValidation: passwordValidation,
                               username: username));
                         }
-                      },
+                      }: null,
                       style: const ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll<Color>(
                             Color.fromARGB(255, 89, 206, 144)),
@@ -299,7 +344,7 @@ class _RegisterState extends State<RegisterScreen> {
                             Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: ElevatedButton(
-                                onPressed: () {
+                                onPressed: _acceptedTerms ? () {
                                   final FormState form = _formKey.currentState!;
                                   if (form.validate()) {
                                     String password =
@@ -326,7 +371,7 @@ class _RegisterState extends State<RegisterScreen> {
                                               coords: state.latLng),
                                         );
                                   }
-                                },
+                                }: null,
                                 style: const ButtonStyle(
                                   backgroundColor:
                                       MaterialStatePropertyAll<Color>(
