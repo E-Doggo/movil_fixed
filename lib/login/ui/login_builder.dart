@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proyecto_progra_movil/app_bar.dart';
@@ -68,6 +69,10 @@ Widget LoginOnWait(emailController, passwordController, bool validating) {
                       decoration: const InputDecoration(
                         labelText: 'Correo',
                       ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[a-zA-Z0-9]')),
+                      ],
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
@@ -76,6 +81,10 @@ Widget LoginOnWait(emailController, passwordController, bool validating) {
                       decoration: const InputDecoration(
                         labelText: 'Contraseña',
                       ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[a-zA-Z0-9]')),
+                      ],
                     ),
                   ],
                 ),

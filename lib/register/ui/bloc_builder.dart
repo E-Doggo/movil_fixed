@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
@@ -65,6 +66,9 @@ class _RegisterState extends State<RegisterScreen> {
       validator: (String? value) {
         return (value!.isEmpty) ? "Complete el punto" : null;
       },
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9 ]')),
+      ],
     );
   }
 
@@ -80,6 +84,9 @@ class _RegisterState extends State<RegisterScreen> {
             ? 'Use the @ char.'
             : null;
       },
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9@._-]')),
+      ],
     );
   }
 
@@ -94,6 +101,9 @@ class _RegisterState extends State<RegisterScreen> {
       validator: (String? value) {
         return (value!.isEmpty) ? "Ingrese una contraseña" : null;
       },
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9 ]')),
+      ],
     );
   }
 
