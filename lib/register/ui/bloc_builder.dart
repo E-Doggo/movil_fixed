@@ -10,6 +10,8 @@ import 'package:proyecto_progra_movil/register/bloc/register_bloc.dart';
 import 'package:proyecto_progra_movil/register/bloc/register_event.dart';
 import 'package:proyecto_progra_movil/register/bloc/register_state.dart';
 import 'package:proyecto_progra_movil/app_bar.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -118,7 +120,13 @@ class _RegisterState extends State<RegisterScreen> {
             controlAffinity: ListTileControlAffinity.leading,
           ),
           InkWell(
-            onTap:(){
+            onTap:() async {
+              const url = 'https://www.tusitio.com/terminos-y-condiciones';
+              if (await canLaunchUrlString(url)) {
+                await launchUrlString(url);
+              } else {
+                throw 'No se puede abrir $url';
+              }
 
             },
             child: const Text(
@@ -157,8 +165,13 @@ class _RegisterState extends State<RegisterScreen> {
             controlAffinity: ListTileControlAffinity.leading,
           ),
           InkWell(
-            onTap:(){
-
+            onTap:() async {
+              const url = 'https://www.tusitio.com/terminos-y-condiciones';
+              if (await canLaunchUrlString(url)) {
+                await launchUrlString(url);
+              } else {
+                throw 'No se puede abrir $url';
+              }
             },
             child: const Text(
               'Leer términos y condiciones',
