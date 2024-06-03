@@ -71,7 +71,8 @@ Widget LoginOnWait(emailController, passwordController, bool validating) {
                       ),
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
-                            RegExp(r'[a-zA-Z0-9]')),
+                          RegExp(r'[a-zA-Z0-9.!#$%&\*+/=?^_`{|}~@-]'),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 10),
@@ -81,10 +82,6 @@ Widget LoginOnWait(emailController, passwordController, bool validating) {
                       decoration: const InputDecoration(
                         labelText: 'Contraseña',
                       ),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp(r'[a-zA-Z0-9]')),
-                      ],
                     ),
                   ],
                 ),

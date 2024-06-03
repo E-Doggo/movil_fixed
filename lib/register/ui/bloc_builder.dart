@@ -67,7 +67,7 @@ class _RegisterState extends State<RegisterScreen> {
         return (value!.isEmpty) ? "Complete el punto" : null;
       },
       inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9 ]')),
+        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9. ]')),
       ],
     );
   }
@@ -85,7 +85,9 @@ class _RegisterState extends State<RegisterScreen> {
             : null;
       },
       inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9@._-]')),
+        FilteringTextInputFormatter.allow(
+          RegExp(r'[a-zA-Z0-9.!#$%&\*+/=?^_`{|}~@-]'),
+        ),
       ],
     );
   }
@@ -101,9 +103,6 @@ class _RegisterState extends State<RegisterScreen> {
       validator: (String? value) {
         return (value!.isEmpty) ? "Ingrese una contraseña" : null;
       },
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9 ]')),
-      ],
     );
   }
 
