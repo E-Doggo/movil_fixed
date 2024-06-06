@@ -121,7 +121,7 @@ class _RegisterState extends State<RegisterScreen> {
           ),
           InkWell(
             onTap:() async {
-              const url = 'https://www.tusitio.com/terminos-y-condiciones';
+              const url = 'https://www.termsandcondiitionssample.com/live.php?token=f32fB2kWVBpHNtmka7PPYEMOAQQdJk25';
               if (await canLaunchUrlString(url)) {
                 await launchUrlString(url);
               } else {
@@ -166,7 +166,7 @@ class _RegisterState extends State<RegisterScreen> {
           ),
           InkWell(
             onTap:() async {
-              const url = 'https://www.tusitio.com/terminos-y-condiciones';
+              const url = 'https://www.termsandcondiitionssample.com/live.php?token=f32fB2kWVBpHNtmka7PPYEMOAQQdJk25';
               if (await canLaunchUrlString(url)) {
                 await launchUrlString(url);
               } else {
